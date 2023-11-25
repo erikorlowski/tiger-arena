@@ -11,13 +11,14 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
-	"github.com/Team254/cheesy-arena/game"
-	"github.com/Team254/cheesy-arena/model"
-	"github.com/mitchellh/mapstructure"
 	"io"
 	"io/ioutil"
 	"net/http"
 	"strconv"
+
+	"github.com/Team254/cheesy-arena/game"
+	"github.com/Team254/cheesy-arena/model"
+	"github.com/mitchellh/mapstructure"
 )
 
 const (
@@ -52,7 +53,7 @@ type TbaAlliance struct {
 	Score      *int     `json:"score"`
 }
 
-type TbaScoreBreakdown struct {
+type TbaScoreBreakdown struct { // TIGER_TODO
 	MobilityRobot1              string               `mapstructure:"mobilityRobot1"`
 	MobilityRobot2              string               `mapstructure:"mobilityRobot2"`
 	MobilityRobot3              string               `mapstructure:"mobilityRobot3"`
@@ -86,12 +87,12 @@ type TbaScoreBreakdown struct {
 	RP                          int                  `mapstructure:"rp"`
 }
 
-type TbaLink struct {
+type TbaLink struct { // TIGER_TODO
 	Nodes [3]int `json:"nodes"`
 	Row   string `json:"row"`
 }
 
-type TbaRanking struct {
+type TbaRanking struct { // TIGER_TODO
 	TeamKey       string `json:"team_key"`
 	Rank          int    `json:"rank"`
 	RP            float32
@@ -149,13 +150,13 @@ type TbaPublishedAward struct {
 
 var mobilityMapping = map[bool]string{false: "No", true: "Yes"}
 var autoChargeStationMapping = map[bool]string{false: "None", true: "Docked"}
-var endGameChargeStationMapping = map[game.EndgameStatus]string{
+var endGameChargeStationMapping = map[game.EndgameStatus]string{ // TIGER_TODO
 	game.EndgameNone:   "None",
 	game.EndgameParked: "Park",
 	game.EndgameDocked: "Docked",
 }
-var chargeStationLevelMapping = map[bool]string{false: "NotLevel", true: "Level"}
-var gridRowMapping = map[int]string{0: "Bottom", 1: "Mid", 2: "Top"}
+var chargeStationLevelMapping = map[bool]string{false: "NotLevel", true: "Level"} // TIGER_TODO
+var gridRowMapping = map[int]string{0: "Bottom", 1: "Mid", 2: "Top"}              // TIGER_TODO
 
 func NewTbaClient(eventCode, secretId, secret string) *TbaClient {
 	return &TbaClient{BaseUrl: tbaBaseUrl, eventCode: eventCode, secretId: secretId, secret: secret,
@@ -353,9 +354,9 @@ func (client *TbaClient) PublishMatches(database *model.Database) error {
 			}
 		}
 		alliances := make(map[string]*TbaAlliance)
-		alliances["red"] = createTbaAlliance([3]int{match.Red1, match.Red2, match.Red3}, [3]bool{match.Red1IsSurrogate,
+		alliances["red"] = createTbaAlliance([3]int{match.Red1, match.Red2, match.Red3}, [3]bool{match.Red1IsSurrogate, // TIGER_TODO
 			match.Red2IsSurrogate, match.Red3IsSurrogate}, redScore, redCards)
-		alliances["blue"] = createTbaAlliance([3]int{match.Blue1, match.Blue2, match.Blue3},
+		alliances["blue"] = createTbaAlliance([3]int{match.Blue1, match.Blue2, match.Blue3}, // TIGER_TODO
 			[3]bool{match.Blue1IsSurrogate, match.Blue2IsSurrogate, match.Blue3IsSurrogate}, blueScore, blueCards)
 
 		tbaMatches[i] = TbaMatch{
@@ -396,7 +397,7 @@ func (client *TbaClient) PublishRankings(database *model.Database) error {
 	breakdowns := []string{"RP", "Match", "ChargeStation", "Auto"}
 	tbaRankings := make([]TbaRanking, len(rankings))
 	for i, ranking := range rankings {
-		tbaRankings[i] = TbaRanking{
+		tbaRankings[i] = TbaRanking{ // TIGER_TODO
 			TeamKey:       getTbaTeam(ranking.TeamId),
 			Rank:          ranking.Rank,
 			RP:            float32(ranking.RankingPoints) / float32(ranking.Played),
@@ -560,7 +561,7 @@ func (client *TbaClient) postRequest(resource string, action string, body []byte
 	return httpClient.Do(request)
 }
 
-func createTbaAlliance(teamIds [3]int, surrogates [3]bool, score *int, cards map[string]string) *TbaAlliance {
+func createTbaAlliance(teamIds [3]int, surrogates [3]bool, score *int, cards map[string]string) *TbaAlliance { // TIGER_TODO
 	alliance := TbaAlliance{Teams: []string{}, Surrogates: []string{}, Dqs: []string{}, Score: score}
 	for i, teamId := range teamIds {
 		if teamId == 0 {
@@ -586,7 +587,7 @@ func createTbaScoringBreakdown(
 	match *model.Match,
 	matchResult *model.MatchResult,
 	alliance string,
-) map[string]any {
+) map[string]any { // TIGER_TODO
 	var breakdown TbaScoreBreakdown
 	var score *game.Score
 	var scoreSummary, opponentScoreSummary *game.ScoreSummary
@@ -674,7 +675,7 @@ func createTbaScoringBreakdown(
 	return breakdownMap
 }
 
-func createTbaGridRow(grid *game.Grid, row int, isAuto bool) [9]string {
+func createTbaGridRow(grid *game.Grid, row int, isAuto bool) [9]string { // TIGER_TODO
 	var gridRow [9]string
 	for column := 0; column < 9; column++ {
 		gridRow[column] = createTbaGridNode(grid, row, column, isAuto)
@@ -682,7 +683,7 @@ func createTbaGridRow(grid *game.Grid, row int, isAuto bool) [9]string {
 	return gridRow
 }
 
-func createTbaGridNode(grid *game.Grid, row int, column int, isAuto bool) string {
+func createTbaGridNode(grid *game.Grid, row int, column int, isAuto bool) string { // TIGER_TODO
 	if isAuto && !grid.AutoScoring[row][column] {
 		return "None"
 	}

@@ -7,10 +7,11 @@ package model
 
 import (
 	"fmt"
-	"github.com/Team254/cheesy-arena/game"
 	"sort"
 	"strings"
 	"time"
+
+	"github.com/Team254/cheesy-arena/game"
 )
 
 //go:generate stringer -type=MatchType
@@ -27,7 +28,7 @@ func (t MatchType) Get() MatchType {
 	return t
 }
 
-type Match struct {
+type Match struct { // TIGER_TODO
 	Id                  int `db:"id"`
 	Type                MatchType
 	TypeOrder           int

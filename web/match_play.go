@@ -228,7 +228,7 @@ func (web *Web) matchPlayWebsocketHandler(w http.ResponseWriter, r *http.Request
 			web.arena.SavedMatchResult = matchResult
 			web.arena.ScorePostedNotifier.Notify()
 		case "substituteTeams":
-			args := struct {
+			args := struct { // TIGER_TODO
 				Red1  int
 				Red2  int
 				Red3  int

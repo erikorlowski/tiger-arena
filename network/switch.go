@@ -9,10 +9,11 @@ import (
 	"bufio"
 	"bytes"
 	"fmt"
-	"github.com/Team254/cheesy-arena/model"
 	"net"
 	"sync"
 	"time"
+
+	"github.com/Team254/cheesy-arena/model"
 )
 
 const (
@@ -22,7 +23,7 @@ const (
 	switchTelnetPort               = 23
 )
 
-const (
+const ( // TIGER_TODO
 	red1Vlan  = 10
 	red2Vlan  = 20
 	red3Vlan  = 30
@@ -102,7 +103,7 @@ func (sw *Switch) ConfigureTeamEthernet(teams [6]*model.Team) error {
 			switchTeamGatewayAddress,
 		)
 	}
-	addTeamVlan(teams[0], red1Vlan)
+	addTeamVlan(teams[0], red1Vlan) // TIGER_TODO
 	addTeamVlan(teams[1], red2Vlan)
 	addTeamVlan(teams[2], red3Vlan)
 	addTeamVlan(teams[3], blue1Vlan)

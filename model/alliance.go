@@ -10,7 +10,7 @@ import "sort"
 type Alliance struct {
 	Id      int `db:"id,manual"`
 	TeamIds []int
-	Lineup  [3]int
+	Lineup  [3]int // TIGER_TODO
 }
 
 func (database *Database) CreateAlliance(alliance *Alliance) error {
@@ -45,7 +45,7 @@ func (database *Database) GetAllAlliances() ([]Alliance, error) {
 }
 
 // Updates the alliance, if necessary, to include whoever played in the match, in case there was a substitute.
-func (database *Database) UpdateAllianceFromMatch(allianceId int, matchTeamIds [3]int) error {
+func (database *Database) UpdateAllianceFromMatch(allianceId int, matchTeamIds [3]int) error { // TIGER_TODO
 	alliance, err := database.GetAllianceById(allianceId)
 	if err != nil {
 		return err
@@ -82,14 +82,14 @@ func (database *Database) UpdateAllianceFromMatch(allianceId int, matchTeamIds [
 // If the given match isn't a playoff match, empty arrays are returned.
 func (database *Database) GetOffFieldTeamIds(match *Match) ([]int, []int, error) {
 	redOffFieldTeams, err := database.getOffFieldTeamIdsForAlliance(
-		match.PlayoffRedAlliance, match.Red1, match.Red2, match.Red3,
+		match.PlayoffRedAlliance, match.Red1, match.Red2, match.Red3, // TIGER_TODO
 	)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	blueOffFieldTeams, err := database.getOffFieldTeamIdsForAlliance(
-		match.PlayoffBlueAlliance, match.Blue1, match.Blue2, match.Blue3,
+		match.PlayoffBlueAlliance, match.Blue1, match.Blue2, match.Blue3, // TIGER_TODO
 	)
 	if err != nil {
 		return nil, nil, err
@@ -98,7 +98,7 @@ func (database *Database) GetOffFieldTeamIds(match *Match) ([]int, []int, error)
 	return redOffFieldTeams, blueOffFieldTeams, nil
 }
 
-func (database *Database) getOffFieldTeamIdsForAlliance(allianceId int, teamId1, teamId2, teamId3 int) ([]int, error) {
+func (database *Database) getOffFieldTeamIdsForAlliance(allianceId int, teamId1, teamId2, teamId3 int) ([]int, error) { // TIGER_TODO
 	if allianceId == 0 {
 		return []int{}, nil
 	}
@@ -109,7 +109,7 @@ func (database *Database) getOffFieldTeamIdsForAlliance(allianceId int, teamId1,
 	}
 	offFieldTeamIds := []int{}
 	for _, allianceTeamId := range alliance.TeamIds {
-		if allianceTeamId != teamId1 && allianceTeamId != teamId2 && allianceTeamId != teamId3 {
+		if allianceTeamId != teamId1 && allianceTeamId != teamId2 && allianceTeamId != teamId3 { // TIGER_TODO
 			offFieldTeamIds = append(offFieldTeamIds, allianceTeamId)
 		}
 	}

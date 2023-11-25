@@ -82,7 +82,7 @@ body {
 .endgame-status[data-value="2"] {
   background-color: #263;
 }
-.charge-station-level[data-value="false"] {
+.charge-station-level[data-value="false"] {/* // TIGER_TODO */
   background-color: #622;
 }
 .charge-station-level[data-value="true"] {
@@ -100,7 +100,7 @@ body {
   display: flex;
   justify-content: center;
 }
-.grid-node {
+.grid-node {/* // TIGER_TODO */
   width: 10vw;
   display: flex;
   flex-direction: column;
@@ -110,10 +110,10 @@ body {
   margin-top: -1px;
   margin-left: -1px;
 }
-.grid-node[data-node="2"], .grid-node[data-node="5"] {
+.grid-node[data-node="2"], .grid-node[data-node="5"] {/* // TIGER_TODO */
   margin-right: 1vw;
 }
-.grid-node-auto {
+.grid-node-auto {/* // TIGER_TODO */
   width: 4vw;
   height: 2vw;
   margin-bottom: 0.5vw;
@@ -124,15 +124,15 @@ body {
   background-color: #333;
   color: #ccc;
 }
-.grid-node-auto[data-value="true"] {
+.grid-node-auto[data-value="true"] {/* // TIGER_TODO */
   background-color: #263;
 }
-.grid-node-states {
+.grid-node-states {/* // TIGER_TODO */
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
 }
-.grid-node-button {
+.grid-node-button {/* // TIGER_TODO */
   width: 4vw;
   height: 4vw;
   display: flex;
@@ -140,15 +140,15 @@ body {
   align-items: center;
   opacity: 0.4;
 }
-.grid-node-button[data-value="true"] {
+.grid-node-button[data-value="true"] {/* // TIGER_TODO */
   border: 2px solid #aaa;
   border-radius: 0.5vw;
   opacity: 1;
 }
-.grid-node-button img {
+.grid-node-button img {/* // TIGER_TODO */
   width: 90%;
 }
-#chargeStation {
+#chargeStation {/* // TIGER_TODO */
   width: 70vw;
   justify-content: space-between;
   align-items: center;

@@ -8,10 +8,11 @@ package partner
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/Team254/cheesy-arena/model"
 	"io"
 	"net/http"
 	"strconv"
+
+	"github.com/Team254/cheesy-arena/model"
 )
 
 const nexusBaseUrl = "https://api.frc.nexus"
@@ -21,7 +22,7 @@ type NexusClient struct {
 	eventCode string
 }
 
-type nexusLineup struct {
+type nexusLineup struct { // TIGER_TODO
 	Red  [3]string `json:"red"`
 	Blue [3]string `json:"blue"`
 }
@@ -54,7 +55,7 @@ func (client *NexusClient) GetLineup(tbaMatchKey model.TbaMatchKey) (*[6]int, er
 	}
 
 	var lineup [6]int
-	lineup[0], _ = strconv.Atoi(nexusLineup.Red[0])
+	lineup[0], _ = strconv.Atoi(nexusLineup.Red[0]) // TIGER_TODO
 	lineup[1], _ = strconv.Atoi(nexusLineup.Red[1])
 	lineup[2], _ = strconv.Atoi(nexusLineup.Red[2])
 	lineup[3], _ = strconv.Atoi(nexusLineup.Blue[0])

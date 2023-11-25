@@ -6,11 +6,12 @@
 package field
 
 import (
+	"strconv"
+
 	"github.com/Team254/cheesy-arena/game"
 	"github.com/Team254/cheesy-arena/model"
 	"github.com/Team254/cheesy-arena/playoff"
 	"github.com/Team254/cheesy-arena/websocket"
-	"strconv"
 )
 
 type ArenaNotifiers struct {
@@ -202,8 +203,8 @@ func (arena *Arena) generateRealtimeScoreMessage() any {
 func (arena *Arena) GenerateScorePostedMessage() any {
 	redScoreSummary := arena.SavedMatchResult.RedScoreSummary()
 	blueScoreSummary := arena.SavedMatchResult.BlueScoreSummary()
-	redRankingPoints := redScoreSummary.BonusRankingPoints
-	blueRankingPoints := blueScoreSummary.BonusRankingPoints
+	redRankingPoints := redScoreSummary.BonusRankingPoints   // TIGER_TODO
+	blueRankingPoints := blueScoreSummary.BonusRankingPoints // TIGER_TODO
 	switch arena.SavedMatch.Status {
 	case game.RedWonMatch:
 		redRankingPoints += 2
@@ -231,10 +232,10 @@ func (arena *Arena) GenerateScorePostedMessage() any {
 	}
 
 	redRankings := map[int]*game.Ranking{
-		arena.SavedMatch.Red1: nil, arena.SavedMatch.Red2: nil, arena.SavedMatch.Red3: nil,
+		arena.SavedMatch.Red1: nil, arena.SavedMatch.Red2: nil, arena.SavedMatch.Red3: nil, // TIGER_TODO
 	}
 	blueRankings := map[int]*game.Ranking{
-		arena.SavedMatch.Blue1: nil, arena.SavedMatch.Blue2: nil, arena.SavedMatch.Blue3: nil,
+		arena.SavedMatch.Blue1: nil, arena.SavedMatch.Blue2: nil, arena.SavedMatch.Blue3: nil, // TIGER_TODO
 	}
 	for index, ranking := range arena.SavedRankings {
 		if _, ok := redRankings[ranking.TeamId]; ok {

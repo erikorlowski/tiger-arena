@@ -7,7 +7,7 @@ var websocket;
 let alliance;
 
 // Handles a websocket message to update the teams for the current match.
-const handleMatchLoad = function(data) {
+const handleMatchLoad = function(data) { // TIGER_TODO
   $("#matchName").text(data.Match.LongName);
   if (alliance === "red") {
     $("#team1").text(data.Match.Red1);
@@ -39,7 +39,7 @@ const handleMatchTime = function(data) {
 };
 
 // Handles a websocket message to update the realtime scoring fields.
-const handleRealtimeScore = function(data) {
+const handleRealtimeScore = function(data) { // TIGER_TODO
   let realtimeScore;
   if (alliance === "red") {
     realtimeScore = data.Red;
@@ -75,7 +75,7 @@ const handleRealtimeScore = function(data) {
 };
 
 // Handles an element click and sends the appropriate websocket message.
-const handleClick = function(command, teamPosition = 0, gridRow = 0, gridNode = 0, nodeState = 0) {
+const handleClick = function(command, teamPosition = 0, gridRow = 0, gridNode = 0, nodeState = 0) { // TIGER_TODO
   websocket.send(command, {TeamPosition: teamPosition, GridRow: gridRow, GridNode: gridNode, NodeState: nodeState});
 };
 
@@ -87,7 +87,7 @@ const commitMatchScore = function() {
 };
 
 // Returns the display text corresponding to the given integer endgame status value.
-const getEndgameStatusText = function(level) {
+const getEndgameStatusText = function(level) { // TIGER_TODO
   switch (level) {
     case 1:
       return "Park";

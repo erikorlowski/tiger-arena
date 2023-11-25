@@ -7,11 +7,12 @@ package web
 
 import (
 	"fmt"
-	"github.com/Team254/cheesy-arena/model"
-	"github.com/Team254/cheesy-arena/tournament"
 	"net/http"
 	"strconv"
 	"time"
+
+	"github.com/Team254/cheesy-arena/model"
+	"github.com/Team254/cheesy-arena/tournament"
 )
 
 type RankedTeam struct {
@@ -75,7 +76,7 @@ func (web *Web) allianceSelectionPostHandler(w http.ResponseWriter, r *http.Requ
 						break
 					}
 				}
-				if !found {
+				if !found { // TIGER_TODO
 					web.renderAllianceSelection(
 						w,
 						r,
@@ -111,13 +112,13 @@ func (web *Web) allianceSelectionStartHandler(w http.ResponseWriter, r *http.Req
 
 	// Create a blank alliance set matching the event configuration.
 	web.arena.AllianceSelectionAlliances = make([]model.Alliance, web.arena.EventSettings.NumPlayoffAlliances)
-	teamsPerAlliance := 3
+	teamsPerAlliance := 3 // TIGER_TODO
 	if web.arena.EventSettings.SelectionRound3Order != "" {
 		teamsPerAlliance = 4
 	}
 	for i := 0; i < web.arena.EventSettings.NumPlayoffAlliances; i++ {
 		web.arena.AllianceSelectionAlliances[i].Id = i + 1
-		web.arena.AllianceSelectionAlliances[i].TeamIds = make([]int, teamsPerAlliance)
+		web.arena.AllianceSelectionAlliances[i].TeamIds = make([]int, teamsPerAlliance) // TIGER_TODO
 	}
 
 	// Populate the ranked list of teams.
@@ -207,7 +208,7 @@ func (web *Web) allianceSelectionFinalizeHandler(w http.ResponseWriter, r *http.
 	for _, alliance := range web.arena.AllianceSelectionAlliances {
 		// Populate the initial lineup according to the tournament rules (alliance captain in the middle, first pick on
 		// the left, second pick on the right).
-		alliance.Lineup[0] = alliance.TeamIds[1]
+		alliance.Lineup[0] = alliance.TeamIds[1] // TIGER_TODO
 		alliance.Lineup[1] = alliance.TeamIds[0]
 		alliance.Lineup[2] = alliance.TeamIds[2]
 
@@ -321,7 +322,7 @@ func (web *Web) canResetAllianceSelection() bool {
 }
 
 // Returns the row and column of the next alliance selection spot that should have keyboard autofocus.
-func (web *Web) determineNextCell() (int, int) {
+func (web *Web) determineNextCell() (int, int) { // TIGER_TODO
 	// Check the first two columns.
 	for i, alliance := range web.arena.AllianceSelectionAlliances {
 		if alliance.TeamIds[0] == 0 {

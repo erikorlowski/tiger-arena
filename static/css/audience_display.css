@@ -124,7 +124,7 @@ html {
   justify-content: space-evenly;
   opacity: 0;
 }
-.score-links {
+.score-links {/* // TIGER_TODO */
   display: flex;
   flex-direction: column;
   justify-content: center;

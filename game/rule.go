@@ -14,7 +14,7 @@ type Rule struct {
 }
 
 // All rules from the 2022 game that carry point penalties.
-var rules = []*Rule{
+var rules = []*Rule{ // TIGER_TODO
 	{1, "G103", false, false, "BUMPERS must be in Bumper Zone (see R402) during the match."},
 	{2, "G106", false, false, "ROBOT height, as measured when it’s resting normally on a flat floor, may not exceed 6 ft. 6 in. above the carpet during the MATCH."},
 	{3, "G107", false, false, "ROBOTS may not extend beyond their FRAME PERIMETER in more than 48 in."},

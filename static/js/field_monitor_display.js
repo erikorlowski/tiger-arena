@@ -11,7 +11,7 @@ var lowBatteryThreshold = 8;
 var highBtuThreshold = 4.0;
 
 
-var handleArenaStatus = function(data) {
+var handleArenaStatus = function(data) { // TIGER_TODO
   // If getting data for the wrong match (e.g. after a server restart), reload the page.
   if (currentMatchId == null) {
     currentMatchId = data.MatchId;

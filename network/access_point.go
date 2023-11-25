@@ -76,7 +76,7 @@ func (ap *AccessPoint) SetSettings(
 
 	// Create config channel the first time this method is called.
 	if ap.configRequestChan == nil {
-		ap.configRequestChan = make(chan [6]*model.Team, accessPointRequestBufferSize)
+		ap.configRequestChan = make(chan [6]*model.Team, accessPointRequestBufferSize) // TIGER_TODO
 	}
 }
 
@@ -135,7 +135,7 @@ func (ap *AccessPoint) handleTeamWifiConfiguration(teams [6]*model.Team) {
 
 	if !ap.isVividType {
 		// Clear the state of the radio before loading teams; the Linksys AP is crash-prone otherwise.
-		ap.configureTeams([6]*model.Team{nil, nil, nil, nil, nil, nil})
+		ap.configureTeams([6]*model.Team{nil, nil, nil, nil, nil, nil}) // TIGER_TODO
 	}
 	ap.configureTeams(teams)
 }
@@ -145,7 +145,7 @@ func (ap *AccessPoint) configureTeams(teams [6]*model.Team) {
 
 	for {
 		teamIndex := 0
-		for teamIndex < 6 {
+		for teamIndex < 6 { // TIGER_TODO
 			config, err := ap.generateTeamAccessPointConfig(teams[teamIndex], teamIndex+1)
 			if err != nil {
 				log.Printf("Failed to generate WiFi configuration for AP %d: %v", ap.apNumber, err)
@@ -267,7 +267,7 @@ func addConfigurationHeader(commandList string) string {
 
 // Verifies WPA key validity and produces the configuration command for the given team.
 func (ap *AccessPoint) generateTeamAccessPointConfig(team *model.Team, position int) (string, error) {
-	if position < 1 || position > 6 {
+	if position < 1 || position > 6 { // TIGER_TODO
 		return "", fmt.Errorf("invalid team position %d", position)
 	}
 
@@ -340,7 +340,7 @@ func (ap *AccessPoint) updateTeamWifiBTU() error {
 	if ap.isVividType {
 		interfaces = []string{"ath1", "ath11", "ath12", "ath13", "ath14", "ath15"}
 	} else {
-		interfaces = []string{"wlan0", "wlan0-1", "wlan0-2", "wlan0-3", "wlan0-4", "wlan0-5"}
+		interfaces = []string{"wlan0", "wlan0-1", "wlan0-2", "wlan0-3", "wlan0-4", "wlan0-5"} // TIGER_TODO
 	}
 
 	for i := range ap.TeamWifiStatuses {

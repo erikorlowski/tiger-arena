@@ -5,7 +5,7 @@
 
 package game
 
-type ScoreSummary struct {
+type ScoreSummary struct { // TIGER_TODO
 	MobilityPoints                  int
 	AutoPoints                      int
 	GridPoints                      int
@@ -44,7 +44,7 @@ func DetermineMatchStatus(redScoreSummary, blueScoreSummary *ScoreSummary, apply
 		return status
 	}
 
-	if applyPlayoffTiebreakers {
+	if applyPlayoffTiebreakers { // TIGER_TODO
 		// Check scoring breakdowns to resolve playoff ties.
 		if status := comparePoints(
 			redScoreSummary.NumOpponentTechFouls, blueScoreSummary.NumOpponentTechFouls,

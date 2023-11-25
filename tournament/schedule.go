@@ -8,18 +8,19 @@ package tournament
 import (
 	"encoding/csv"
 	"fmt"
-	"github.com/Team254/cheesy-arena/model"
 	"math"
 	"math/rand"
 	"os"
 	"path/filepath"
 	"strconv"
 	"time"
+
+	"github.com/Team254/cheesy-arena/model"
 )
 
 const (
 	schedulesDir  = "schedules"
-	TeamsPerMatch = 6
+	TeamsPerMatch = 6 // TIGER_TODO
 )
 
 // Creates a random schedule for the given parameters and returns it as a list of matches.
@@ -50,7 +51,7 @@ func BuildRandomSchedule(
 	}
 
 	// Convert string fields from schedule to integers.
-	anonSchedule := make([][12]int, numMatches)
+	anonSchedule := make([][12]int, numMatches) // TIGER_TODO
 	for i := 0; i < numMatches; i++ {
 		for j := 0; j < 12; j++ {
 			anonSchedule[i][j], err = strconv.Atoi(csvLines[i][j])
@@ -77,7 +78,7 @@ func BuildRandomSchedule(
 		} else {
 			return nil, fmt.Errorf("invalid match type %q", matchType)
 		}
-		matches[i].Red1 = teams[teamShuffle[anonMatch[0]-1]].Id
+		matches[i].Red1 = teams[teamShuffle[anonMatch[0]-1]].Id // TIGER_TODO
 		matches[i].Red1IsSurrogate = anonMatch[1] == 1
 		matches[i].Red2 = teams[teamShuffle[anonMatch[2]-1]].Id
 		matches[i].Red2IsSurrogate = anonMatch[3] == 1

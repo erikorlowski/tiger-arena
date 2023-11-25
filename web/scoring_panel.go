@@ -2,20 +2,21 @@
 // Author: pat@patfairbank.com (Patrick Fairbank)
 //
 // Web handlers for scoring interface.
-
+// TIGER_TODO
 package web
 
 import (
 	"fmt"
+	"io"
+	"log"
+	"net/http"
+
 	"github.com/Team254/cheesy-arena/field"
 	"github.com/Team254/cheesy-arena/game"
 	"github.com/Team254/cheesy-arena/model"
 	"github.com/Team254/cheesy-arena/websocket"
 	"github.com/gorilla/mux"
 	"github.com/mitchellh/mapstructure"
-	"io"
-	"log"
-	"net/http"
 )
 
 // Renders the scoring interface which enables input of scores in real-time.

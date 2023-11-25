@@ -7,7 +7,7 @@ package game
 
 import "time"
 
-var ChargeStationTeleopGracePeriod = 3 * time.Second
+var ChargeStationTeleopGracePeriod = 3 * time.Second // TIGER_TODO
 
 var MatchTiming = struct {
 	WarmupDurationSec                  int
@@ -17,9 +17,9 @@ var MatchTiming = struct {
 	WarningRemainingDurationSec        int
 	TimeoutDurationSec                 int
 	TimeoutWarningRemainingDurationSec int
-}{0, 15, 3, 135, 30, 0, 60}
+}{0, 15, 3, 135, 30, 0, 60} // TIGER_TODO
 
-func GetDurationToAutoEnd() time.Duration {
+func GetDurationToAutoEnd() time.Duration { // TIGER_TODO
 	return time.Duration(MatchTiming.WarmupDurationSec+MatchTiming.AutoDurationSec) * time.Second
 }
 

@@ -84,7 +84,7 @@ const executeTransitionQueue = function() {
 };
 
 // Handles a websocket message to update the teams for the current match.
-const handleMatchLoad = function(data) {
+const handleMatchLoad = function(data) { // TIGER_TODO
   currentMatch = data.Match;
   $("#" + redSide + "Team1").text(currentMatch.Red1);
   $("#" + redSide + "Team2").text(currentMatch.Red2);
@@ -142,7 +142,7 @@ const handleMatchTime = function(data) {
 };
 
 // Handles a websocket message to update the match score.
-const handleRealtimeScore = function(data) {
+const handleRealtimeScore = function(data) { // TIGER_TODO
   $("#" + redSide + "ScoreNumber").text(data.Red.ScoreSummary.Score - data.Red.ScoreSummary.EndgamePoints);
   $("#" + blueSide + "ScoreNumber").text(data.Blue.ScoreSummary.Score - data.Blue.ScoreSummary.EndgamePoints);
 
@@ -169,7 +169,7 @@ const handleRealtimeScore = function(data) {
 };
 
 // Handles a websocket message to populate the final score data.
-const handleScorePosted = function(data) {
+const handleScorePosted = function(data) { // TIGER_TODO
   $("#" + redSide + "FinalScore").text(data.RedScoreSummary.Score);
   $("#" + redSide + "FinalAlliance").text("Alliance " + data.Match.PlayoffRedAlliance);
   setTeamInfo(redSide, 1, data.Match.Red1, data.RedRankings);
@@ -268,7 +268,7 @@ const handlePlaySound = function(sound) {
 };
 
 // Handles a websocket message to update the alliance selection screen.
-const handleAllianceSelection = function(alliances) {
+const handleAllianceSelection = function(alliances) { // TIGER_TODO
   if (alliances && alliances.length > 0) {
     const numColumns = alliances[0].TeamIds.length + 1;
     $.each(alliances, function(k, v) {

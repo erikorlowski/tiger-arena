@@ -25,7 +25,7 @@ $("form").submit(function() {
 });
 
 // Draws the match-editing form for one alliance based on the cached result data.
-const renderResults = function(alliance) {
+const renderResults = function(alliance) { // TIGER_TODO
   const result = allianceResults[alliance];
   const scoreContent = scoreTemplate(result);
   $("#" + alliance + "Score").html(scoreContent);
@@ -63,7 +63,7 @@ const renderResults = function(alliance) {
 };
 
 // Converts the current form values back into JSON structures and caches them.
-const updateResults = function(alliance) {
+const updateResults = function(alliance) { // TIGER_TODO
   const result = allianceResults[alliance];
   const formData = {};
   $.each($("form").serializeArray(), function(k, v) {

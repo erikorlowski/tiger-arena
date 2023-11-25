@@ -7,11 +7,12 @@ package plc
 
 import (
 	"fmt"
-	"github.com/Team254/cheesy-arena/websocket"
-	"github.com/goburrow/modbus"
 	"log"
 	"strings"
 	"time"
+
+	"github.com/Team254/cheesy-arena/websocket"
+	"github.com/goburrow/modbus"
 )
 
 type Plc interface {
@@ -22,7 +23,7 @@ type Plc interface {
 	Run()
 	GetArmorBlockStatuses() map[string]bool
 	GetFieldEstop() bool
-	GetTeamEstops() ([3]bool, [3]bool)
+	GetTeamEstops() ([3]bool, [3]bool) // TIGER_TODO
 	GetEthernetConnected() ([3]bool, [3]bool)
 	ResetMatch()
 	SetStackLights(red, blue, orange, green bool)
@@ -64,7 +65,7 @@ const (
 //go:generate stringer -type=input
 type input int
 
-const (
+const ( // TIGER_TODO
 	fieldEstop input = iota
 	redEstop1
 	redEstop2
@@ -98,7 +99,7 @@ const (
 //go:generate stringer -type=coil
 type coil int
 
-const (
+const ( // TIGER_TODO
 	heartbeat coil = iota
 	matchReset
 	stackLightGreen
@@ -187,7 +188,7 @@ func (plc *ModbusPlc) GetFieldEstop() bool {
 }
 
 // Returns the state of the red and blue driver station emergency stop buttons (true if e-stop is active).
-func (plc *ModbusPlc) GetTeamEstops() ([3]bool, [3]bool) {
+func (plc *ModbusPlc) GetTeamEstops() ([3]bool, [3]bool) { // TIGER_TODO
 	var redEstops, blueEstops [3]bool
 	redEstops[0] = !plc.inputs[redEstop1]
 	redEstops[1] = !plc.inputs[redEstop2]
@@ -199,7 +200,7 @@ func (plc *ModbusPlc) GetTeamEstops() ([3]bool, [3]bool) {
 }
 
 // Returns whether anything is connected to each station's designated Ethernet port on the SCC.
-func (plc *ModbusPlc) GetEthernetConnected() ([3]bool, [3]bool) {
+func (plc *ModbusPlc) GetEthernetConnected() ([3]bool, [3]bool) { // TIGER_TODO
 	return [3]bool{
 			plc.inputs[redConnected1],
 			plc.inputs[redConnected2],
@@ -265,12 +266,12 @@ func (plc *ModbusPlc) GetCoilNames() []string {
 }
 
 // Returns the levelness states of the red and blue charge stations, respectively.
-func (plc *ModbusPlc) GetChargeStationsLevel() (bool, bool) {
+func (plc *ModbusPlc) GetChargeStationsLevel() (bool, bool) { // TIGER_TODO
 	return plc.inputs[redChargeStationLevel], plc.inputs[blueChargeStationLevel]
 }
 
 // Sets the on/off state of the charge station lights.
-func (plc *ModbusPlc) SetChargeStationLights(redState, blueState bool) {
+func (plc *ModbusPlc) SetChargeStationLights(redState, blueState bool) { // TIGER_TODO
 	plc.coils[redChargeStationLight] = redState
 	plc.coils[blueChargeStationLight] = blueState
 }

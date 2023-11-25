@@ -7,8 +7,9 @@ package playoff
 
 import (
 	"fmt"
-	"github.com/Team254/cheesy-arena/model"
 	"strings"
+
+	"github.com/Team254/cheesy-arena/model"
 )
 
 // Creates a single-elimination bracket containing only the required matchups for the given number of alliances, and
@@ -24,7 +25,7 @@ func newSingleEliminationBracket(numAlliances int) (*Matchup, []breakSpec, error
 	// Define eighthfinal matches.
 	ef1 := Matchup{
 		id:                 "EF1",
-		NumWinsToAdvance:   2,
+		NumWinsToAdvance:   2, // TIGER_TODO
 		redAllianceSource:  allianceSelectionSource{1},
 		blueAllianceSource: allianceSelectionSource{16},
 		matchSpecs: []*matchSpec{
@@ -35,7 +36,7 @@ func newSingleEliminationBracket(numAlliances int) (*Matchup, []breakSpec, error
 	}
 	ef2 := Matchup{
 		id:                 "EF2",
-		NumWinsToAdvance:   2,
+		NumWinsToAdvance:   2, // TIGER_TODO
 		redAllianceSource:  allianceSelectionSource{8},
 		blueAllianceSource: allianceSelectionSource{9},
 		matchSpecs: []*matchSpec{
@@ -46,7 +47,7 @@ func newSingleEliminationBracket(numAlliances int) (*Matchup, []breakSpec, error
 	}
 	ef3 := Matchup{
 		id:                 "EF3",
-		NumWinsToAdvance:   2,
+		NumWinsToAdvance:   2, // TIGER_TODO
 		redAllianceSource:  allianceSelectionSource{4},
 		blueAllianceSource: allianceSelectionSource{13},
 		matchSpecs: []*matchSpec{
@@ -57,7 +58,7 @@ func newSingleEliminationBracket(numAlliances int) (*Matchup, []breakSpec, error
 	}
 	ef4 := Matchup{
 		id:                 "EF4",
-		NumWinsToAdvance:   2,
+		NumWinsToAdvance:   2, // TIGER_TODO
 		redAllianceSource:  allianceSelectionSource{5},
 		blueAllianceSource: allianceSelectionSource{12},
 		matchSpecs: []*matchSpec{
@@ -68,7 +69,7 @@ func newSingleEliminationBracket(numAlliances int) (*Matchup, []breakSpec, error
 	}
 	ef5 := Matchup{
 		id:                 "EF5",
-		NumWinsToAdvance:   2,
+		NumWinsToAdvance:   2, // TIGER_TODO
 		redAllianceSource:  allianceSelectionSource{2},
 		blueAllianceSource: allianceSelectionSource{15},
 		matchSpecs: []*matchSpec{
@@ -79,7 +80,7 @@ func newSingleEliminationBracket(numAlliances int) (*Matchup, []breakSpec, error
 	}
 	ef6 := Matchup{
 		id:                 "EF6",
-		NumWinsToAdvance:   2,
+		NumWinsToAdvance:   2, // TIGER_TODO
 		redAllianceSource:  allianceSelectionSource{7},
 		blueAllianceSource: allianceSelectionSource{10},
 		matchSpecs: []*matchSpec{
@@ -90,7 +91,7 @@ func newSingleEliminationBracket(numAlliances int) (*Matchup, []breakSpec, error
 	}
 	ef7 := Matchup{
 		id:                 "EF7",
-		NumWinsToAdvance:   2,
+		NumWinsToAdvance:   2, // TIGER_TODO
 		redAllianceSource:  allianceSelectionSource{3},
 		blueAllianceSource: allianceSelectionSource{14},
 		matchSpecs: []*matchSpec{
@@ -101,7 +102,7 @@ func newSingleEliminationBracket(numAlliances int) (*Matchup, []breakSpec, error
 	}
 	ef8 := Matchup{
 		id:                 "EF8",
-		NumWinsToAdvance:   2,
+		NumWinsToAdvance:   2, // TIGER_TODO
 		redAllianceSource:  allianceSelectionSource{6},
 		blueAllianceSource: allianceSelectionSource{11},
 		matchSpecs: []*matchSpec{
@@ -114,7 +115,7 @@ func newSingleEliminationBracket(numAlliances int) (*Matchup, []breakSpec, error
 	// Define quarterfinal matches.
 	qf1 := Matchup{
 		id:                 "QF1",
-		NumWinsToAdvance:   2,
+		NumWinsToAdvance:   2, // TIGER_TODO
 		redAllianceSource:  newSingleEliminationAllianceSource(&ef1, numAlliances),
 		blueAllianceSource: newSingleEliminationAllianceSource(&ef2, numAlliances),
 		matchSpecs: []*matchSpec{
@@ -125,7 +126,7 @@ func newSingleEliminationBracket(numAlliances int) (*Matchup, []breakSpec, error
 	}
 	qf2 := Matchup{
 		id:                 "QF2",
-		NumWinsToAdvance:   2,
+		NumWinsToAdvance:   2, // TIGER_TODO
 		redAllianceSource:  newSingleEliminationAllianceSource(&ef3, numAlliances),
 		blueAllianceSource: newSingleEliminationAllianceSource(&ef4, numAlliances),
 		matchSpecs: []*matchSpec{
@@ -136,7 +137,7 @@ func newSingleEliminationBracket(numAlliances int) (*Matchup, []breakSpec, error
 	}
 	qf3 := Matchup{
 		id:                 "QF3",
-		NumWinsToAdvance:   2,
+		NumWinsToAdvance:   2, // TIGER_TODO
 		redAllianceSource:  newSingleEliminationAllianceSource(&ef5, numAlliances),
 		blueAllianceSource: newSingleEliminationAllianceSource(&ef6, numAlliances),
 		matchSpecs: []*matchSpec{
@@ -147,7 +148,7 @@ func newSingleEliminationBracket(numAlliances int) (*Matchup, []breakSpec, error
 	}
 	qf4 := Matchup{
 		id:                 "QF4",
-		NumWinsToAdvance:   2,
+		NumWinsToAdvance:   2, // TIGER_TODO
 		redAllianceSource:  newSingleEliminationAllianceSource(&ef7, numAlliances),
 		blueAllianceSource: newSingleEliminationAllianceSource(&ef8, numAlliances),
 		matchSpecs: []*matchSpec{
@@ -160,7 +161,7 @@ func newSingleEliminationBracket(numAlliances int) (*Matchup, []breakSpec, error
 	// Define semifinal matches.
 	sf1 := Matchup{
 		id:                 "SF1",
-		NumWinsToAdvance:   2,
+		NumWinsToAdvance:   2, // TIGER_TODO
 		redAllianceSource:  newSingleEliminationAllianceSource(&qf1, numAlliances),
 		blueAllianceSource: newSingleEliminationAllianceSource(&qf2, numAlliances),
 		matchSpecs: []*matchSpec{
@@ -171,7 +172,7 @@ func newSingleEliminationBracket(numAlliances int) (*Matchup, []breakSpec, error
 	}
 	sf2 := Matchup{
 		id:                 "SF2",
-		NumWinsToAdvance:   2,
+		NumWinsToAdvance:   2, // TIGER_TODO
 		redAllianceSource:  newSingleEliminationAllianceSource(&qf3, numAlliances),
 		blueAllianceSource: newSingleEliminationAllianceSource(&qf4, numAlliances),
 		matchSpecs: []*matchSpec{
@@ -184,7 +185,7 @@ func newSingleEliminationBracket(numAlliances int) (*Matchup, []breakSpec, error
 	// Define final matches.
 	final := Matchup{
 		id:                 "F",
-		NumWinsToAdvance:   2,
+		NumWinsToAdvance:   2, // TIGER_TODO
 		redAllianceSource:  newSingleEliminationAllianceSource(&sf1, numAlliances),
 		blueAllianceSource: newSingleEliminationAllianceSource(&sf2, numAlliances),
 		matchSpecs:         newFinalMatches(43),
@@ -192,7 +193,7 @@ func newSingleEliminationBracket(numAlliances int) (*Matchup, []breakSpec, error
 
 	// Define scheduled breaks.
 	breakSpecs := []breakSpec{
-		{43, 480, "Field Break"},
+		{43, 480, "Field Break"}, // TIGER_TODO
 		{44, 480, "Field Break"},
 		{45, 480, "Field Break"},
 	}
@@ -220,7 +221,7 @@ func newSingleEliminationMatch(longRoundName, shortRoundName string, setNumber, 
 		longName:            fmt.Sprintf("%s %d-%d", longRoundName, setNumber, matchNumber),
 		shortName:           fmt.Sprintf("%s%d-%d", shortRoundName, setNumber, matchNumber),
 		order:               order,
-		durationSec:         600,
+		durationSec:         600, // TIGER_TODO
 		useTiebreakCriteria: true,
 		tbaMatchKey:         model.TbaMatchKey{strings.ToLower(shortRoundName), setNumber, matchNumber},
 	}
@@ -233,7 +234,7 @@ func newFinalMatches(startingOrder int) []*matchSpec {
 			longName:            "Final 1",
 			shortName:           "F1",
 			order:               startingOrder,
-			durationSec:         300,
+			durationSec:         300, // TIGER_TODO
 			useTiebreakCriteria: false,
 			tbaMatchKey:         model.TbaMatchKey{"f", 1, 1},
 		},
@@ -241,7 +242,7 @@ func newFinalMatches(startingOrder int) []*matchSpec {
 			longName:            "Final 2",
 			shortName:           "F2",
 			order:               startingOrder + 1,
-			durationSec:         300,
+			durationSec:         300, // TIGER_TODO
 			useTiebreakCriteria: false,
 			tbaMatchKey:         model.TbaMatchKey{"f", 1, 2},
 		},
@@ -249,7 +250,7 @@ func newFinalMatches(startingOrder int) []*matchSpec {
 			longName:            "Final 3",
 			shortName:           "F3",
 			order:               startingOrder + 2,
-			durationSec:         300,
+			durationSec:         300, // TIGER_TODO
 			useTiebreakCriteria: false,
 			tbaMatchKey:         model.TbaMatchKey{"f", 1, 3},
 		},
@@ -257,7 +258,7 @@ func newFinalMatches(startingOrder int) []*matchSpec {
 			longName:            "Overtime 1",
 			shortName:           "O1",
 			order:               startingOrder + 3,
-			durationSec:         600,
+			durationSec:         600, // TIGER_TODO
 			useTiebreakCriteria: true,
 			isHidden:            true,
 			tbaMatchKey:         model.TbaMatchKey{"f", 1, 4},
@@ -266,7 +267,7 @@ func newFinalMatches(startingOrder int) []*matchSpec {
 			longName:            "Overtime 2",
 			shortName:           "O2",
 			order:               startingOrder + 4,
-			durationSec:         600,
+			durationSec:         600, // TIGER_TODO
 			useTiebreakCriteria: true,
 			isHidden:            true,
 			tbaMatchKey:         model.TbaMatchKey{"f", 1, 5},
@@ -275,7 +276,7 @@ func newFinalMatches(startingOrder int) []*matchSpec {
 			longName:            "Overtime 3",
 			shortName:           "O3",
 			order:               startingOrder + 5,
-			durationSec:         600,
+			durationSec:         600, // TIGER_TODO
 			useTiebreakCriteria: true,
 			isHidden:            true,
 			tbaMatchKey:         model.TbaMatchKey{"f", 1, 6},

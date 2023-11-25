@@ -21,7 +21,7 @@ const showResult = function(matchId) {
 // Sends a websocket message to load all teams into their respective alliance stations.
 const substituteTeams = function(team, position) {
   const teams = {
-    Red1: getTeamNumber("R1"),
+    Red1: getTeamNumber("R1"), // TIGER_TODO
     Red2: getTeamNumber("R2"),
     Red3: getTeamNumber("R3"),
     Blue1: getTeamNumber("B1"),

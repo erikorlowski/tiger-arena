@@ -19,7 +19,7 @@ type EventSettings struct {
 	Name                                        string
 	PlayoffType                                 PlayoffType
 	NumPlayoffAlliances                         int
-	SelectionRound2Order                        string
+	SelectionRound2Order                        string // TIGER_TODO
 	SelectionRound3Order                        string
 	TbaDownloadEnabled                          bool
 	TbaPublishingEnabled                        bool
@@ -46,9 +46,9 @@ type EventSettings struct {
 	PauseDurationSec                            int
 	TeleopDurationSec                           int
 	WarningRemainingDurationSec                 int
-	SustainabilityBonusLinkThresholdWithoutCoop int
-	SustainabilityBonusLinkThresholdWithCoop    int
-	ActivationBonusPointThreshold               int
+	SustainabilityBonusLinkThresholdWithoutCoop int // TIGER_TODO
+	SustainabilityBonusLinkThresholdWithCoop    int // TIGER_TODO
+	ActivationBonusPointThreshold               int // TIGER_TODO
 }
 
 func (database *Database) GetEventSettings() (*EventSettings, error) {
@@ -63,10 +63,10 @@ func (database *Database) GetEventSettings() (*EventSettings, error) {
 	// Database record doesn't exist yet; create it now.
 	eventSettings := EventSettings{
 		Name:                        "Untitled Event",
-		PlayoffType:                 DoubleEliminationPlayoff,
-		NumPlayoffAlliances:         8,
-		SelectionRound2Order:        "L",
-		SelectionRound3Order:        "",
+		PlayoffType:                 DoubleEliminationPlayoff, // TIGER_TODO
+		NumPlayoffAlliances:         8,                        // TIGER_TODO
+		SelectionRound2Order:        "L",                      // TIGER_TODO
+		SelectionRound3Order:        "",                       // TIGER_TODO
 		TbaDownloadEnabled:          true,
 		ApType:                      "linksys",
 		ApTeamChannel:               157,
@@ -76,9 +76,9 @@ func (database *Database) GetEventSettings() (*EventSettings, error) {
 		PauseDurationSec:            game.MatchTiming.PauseDurationSec,
 		TeleopDurationSec:           game.MatchTiming.TeleopDurationSec,
 		WarningRemainingDurationSec: game.MatchTiming.WarningRemainingDurationSec,
-		SustainabilityBonusLinkThresholdWithoutCoop: game.SustainabilityBonusLinkThresholdWithoutCoop,
-		SustainabilityBonusLinkThresholdWithCoop:    game.SustainabilityBonusLinkThresholdWithCoop,
-		ActivationBonusPointThreshold:               game.ActivationBonusPointThreshold,
+		SustainabilityBonusLinkThresholdWithoutCoop: game.SustainabilityBonusLinkThresholdWithoutCoop, // TIGER_TODO
+		SustainabilityBonusLinkThresholdWithCoop:    game.SustainabilityBonusLinkThresholdWithCoop,    // TIGER_TODO
+		ActivationBonusPointThreshold:               game.ActivationBonusPointThreshold,               // TIGER_TODO
 	}
 
 	if err := database.eventSettingsTable.create(&eventSettings); err != nil {

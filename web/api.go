@@ -8,16 +8,17 @@ package web
 import (
 	"encoding/json"
 	"fmt"
+	"io"
+	"net/http"
+	"os"
+	"strconv"
+
 	"github.com/Team254/cheesy-arena/game"
 	"github.com/Team254/cheesy-arena/model"
 	"github.com/Team254/cheesy-arena/partner"
 	"github.com/Team254/cheesy-arena/playoff"
 	"github.com/Team254/cheesy-arena/websocket"
 	"github.com/gorilla/mux"
-	"io"
-	"net/http"
-	"os"
-	"strconv"
 )
 
 type MatchResultWithSummary struct {
@@ -249,7 +250,7 @@ func (web *Web) bracketSvgApiHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (web *Web) gridSvgApiHandler(w http.ResponseWriter, r *http.Request) {
+func (web *Web) gridSvgApiHandler(w http.ResponseWriter, r *http.Request) { // TIGER_TODO
 	vars := mux.Vars(r)
 	alliance := vars["alliance"]
 	var grid game.Grid

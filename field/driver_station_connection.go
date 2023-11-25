@@ -57,7 +57,7 @@ type DriverStationConnection struct {
 	WrongStation string
 }
 
-var allianceStationPositionMap = map[string]byte{"R1": 0, "R2": 1, "R3": 2, "B1": 3, "B2": 4, "B3": 5}
+var allianceStationPositionMap = map[string]byte{"R1": 0, "R2": 1, "R3": 2, "B1": 3, "B2": 4, "B3": 5} // TIGER_TODO
 
 // Opens a UDP connection for communicating to the driver station.
 func newDriverStationConnection(teamId int, allianceStation string, tcpConn net.Conn) (*DriverStationConnection, error) {

@@ -61,7 +61,7 @@ var commitMatch = function() {
 var handleMatchLoad = function(data) {
   $("#matchName").text(data.Match.LongName);
 
-  setTeamCard("red", 1, data.Teams["R1"]);
+  setTeamCard("red", 1, data.Teams["R1"]); // TIGER_TODO
   setTeamCard("red", 2, data.Teams["R2"]);
   setTeamCard("red", 3, data.Teams["R3"]);
   setTeamCard("blue", 1, data.Teams["B1"]);

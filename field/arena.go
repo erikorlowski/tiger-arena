@@ -83,7 +83,7 @@ type Arena struct {
 	matchAborted               bool
 	soundsPlayed               map[*game.MatchSound]struct{}
 	breakDescription           string
-	preloadedTeams             *[6]*model.Team
+	preloadedTeams             *[6]*model.Team // TIGER_TODO
 }
 
 type AllianceStation struct {
@@ -103,7 +103,7 @@ func NewArena(dbPath string) (*Arena, error) {
 	arena.Plc = new(plc.ModbusPlc)
 
 	arena.AllianceStations = make(map[string]*AllianceStation)
-	arena.AllianceStations["R1"] = new(AllianceStation)
+	arena.AllianceStations["R1"] = new(AllianceStation) // TIGER_TODO
 	arena.AllianceStations["R2"] = new(AllianceStation)
 	arena.AllianceStations["R3"] = new(AllianceStation)
 	arena.AllianceStations["B1"] = new(AllianceStation)
@@ -148,10 +148,10 @@ func (arena *Arena) LoadSettings() error {
 	arena.EventSettings = settings
 
 	// Initialize the components that depend on settings.
-	var accessPoint1WifiStatuses, accessPoint2WifiStatuses [6]*network.TeamWifiStatus
+	var accessPoint1WifiStatuses, accessPoint2WifiStatuses [6]*network.TeamWifiStatus // TIGER_TODO
 	if arena.EventSettings.Ap2TeamChannel == 0 {
-		accessPoint1WifiStatuses = [6]*network.TeamWifiStatus{
-			&arena.AllianceStations["R1"].WifiStatus,
+		accessPoint1WifiStatuses = [6]*network.TeamWifiStatus{ // TIGER_TODO
+			&arena.AllianceStations["R1"].WifiStatus, // TIGER_TODO
 			&arena.AllianceStations["R2"].WifiStatus,
 			&arena.AllianceStations["R3"].WifiStatus,
 			&arena.AllianceStations["B1"].WifiStatus,
@@ -159,19 +159,19 @@ func (arena *Arena) LoadSettings() error {
 			&arena.AllianceStations["B3"].WifiStatus,
 		}
 	} else {
-		accessPoint1WifiStatuses = [6]*network.TeamWifiStatus{
-			&arena.AllianceStations["R1"].WifiStatus,
+		accessPoint1WifiStatuses = [6]*network.TeamWifiStatus{ // TIGER_TODO
+			&arena.AllianceStations["R1"].WifiStatus, // TIGER_TODO
 			&arena.AllianceStations["R2"].WifiStatus,
 			&arena.AllianceStations["R3"].WifiStatus,
 			nil,
 			nil,
 			nil,
 		}
-		accessPoint2WifiStatuses = [6]*network.TeamWifiStatus{
+		accessPoint2WifiStatuses = [6]*network.TeamWifiStatus{ // TIGER_TODO
 			nil,
 			nil,
 			nil,
-			&arena.AllianceStations["B1"].WifiStatus,
+			&arena.AllianceStations["B1"].WifiStatus, // TIGER_TODO
 			&arena.AllianceStations["B2"].WifiStatus,
 			&arena.AllianceStations["B3"].WifiStatus,
 		}
@@ -221,7 +221,7 @@ func (arena *Arena) LoadSettings() error {
 	game.UpdateMatchSounds()
 	arena.MatchTimingNotifier.Notify()
 
-	game.SustainabilityBonusLinkThresholdWithoutCoop = settings.SustainabilityBonusLinkThresholdWithoutCoop
+	game.SustainabilityBonusLinkThresholdWithoutCoop = settings.SustainabilityBonusLinkThresholdWithoutCoop // TIGER_TODO
 	game.SustainabilityBonusLinkThresholdWithCoop = settings.SustainabilityBonusLinkThresholdWithCoop
 	game.ActivationBonusPointThreshold = settings.ActivationBonusPointThreshold
 
@@ -277,7 +277,7 @@ func (arena *Arena) LoadMatch(match *model.Match) error {
 		if err != nil {
 			log.Printf("Failed to load lineup from Nexus: %s", err.Error())
 		} else {
-			err = arena.SubstituteTeams(lineup[0], lineup[1], lineup[2], lineup[3], lineup[4], lineup[5])
+			err = arena.SubstituteTeams(lineup[0], lineup[1], lineup[2], lineup[3], lineup[4], lineup[5]) // TIGER_TODO
 			if err != nil {
 				log.Printf("Failed to substitute teams using Nexus lineup; loading match normally: %s", err.Error())
 			} else {
@@ -289,7 +289,7 @@ func (arena *Arena) LoadMatch(match *model.Match) error {
 		}
 	}
 
-	if !loadedByNexus {
+	if !loadedByNexus { // TIGER_TODO
 		err := arena.assignTeam(match.Red1, "R1")
 		if err != nil {
 			return err
@@ -315,7 +315,7 @@ func (arena *Arena) LoadMatch(match *model.Match) error {
 			return err
 		}
 
-		arena.setupNetwork(
+		arena.setupNetwork( // TIGER_TODO
 			[6]*model.Team{
 				arena.AllianceStations["R1"].Team,
 				arena.AllianceStations["R2"].Team,
@@ -383,12 +383,12 @@ func (arena *Arena) LoadNextMatch(startScheduledBreak bool) error {
 }
 
 // Assigns the given team to the given station, also substituting it into the match record.
-func (arena *Arena) SubstituteTeams(red1, red2, red3, blue1, blue2, blue3 int) error {
+func (arena *Arena) SubstituteTeams(red1, red2, red3, blue1, blue2, blue3 int) error { // TIGER_TODO
 	if !arena.CurrentMatch.ShouldAllowSubstitution() {
 		return fmt.Errorf("Can't substitute teams for qualification matches.")
 	}
 
-	if err := arena.validateTeams(red1, red2, red3, blue1, blue2, blue3); err != nil {
+	if err := arena.validateTeams(red1, red2, red3, blue1, blue2, blue3); err != nil { // TIGER_TODO
 		return err
 	}
 	if err := arena.assignTeam(red1, "R1"); err != nil {
@@ -410,13 +410,13 @@ func (arena *Arena) SubstituteTeams(red1, red2, red3, blue1, blue2, blue3 int) e
 		return err
 	}
 
-	arena.CurrentMatch.Red1 = red1
+	arena.CurrentMatch.Red1 = red1 // TIGER_TODO
 	arena.CurrentMatch.Red2 = red2
 	arena.CurrentMatch.Red3 = red3
 	arena.CurrentMatch.Blue1 = blue1
 	arena.CurrentMatch.Blue2 = blue2
 	arena.CurrentMatch.Blue3 = blue3
-	arena.setupNetwork(
+	arena.setupNetwork( // TIGER_TODO
 		[6]*model.Team{
 			arena.AllianceStations["R1"].Team,
 			arena.AllianceStations["R2"].Team,
@@ -499,7 +499,7 @@ func (arena *Arena) ResetMatch() error {
 	}
 	arena.MatchState = PreMatch
 	arena.matchAborted = false
-	arena.AllianceStations["R1"].Bypass = false
+	arena.AllianceStations["R1"].Bypass = false // TIGER_TODO
 	arena.AllianceStations["R2"].Bypass = false
 	arena.AllianceStations["R3"].Bypass = false
 	arena.AllianceStations["B1"].Bypass = false
@@ -800,7 +800,7 @@ func (arena *Arena) preLoadNextMatch() {
 		return
 	}
 
-	var teams [6]*model.Team
+	var teams [6]*model.Team // TIGER_TODO
 	for i, teamId := range []int{nextMatch.Red1, nextMatch.Red2, nextMatch.Red3, nextMatch.Blue1, nextMatch.Blue2,
 		nextMatch.Blue3} {
 		if teamId == 0 {
@@ -814,7 +814,7 @@ func (arena *Arena) preLoadNextMatch() {
 }
 
 // Asynchronously reconfigures the networking hardware for the new set of teams.
-func (arena *Arena) setupNetwork(teams [6]*model.Team, isPreload bool) {
+func (arena *Arena) setupNetwork(teams [6]*model.Team, isPreload bool) { // TIGER_TODO
 	if isPreload {
 		arena.preloadedTeams = &teams
 	} else if arena.preloadedTeams != nil {
@@ -834,11 +834,11 @@ func (arena *Arena) setupNetwork(teams [6]*model.Team, isPreload bool) {
 			}
 		} else {
 			// Two APs are being used. Configure the first for the red teams and the second for the blue teams.
-			if err := arena.accessPoint.ConfigureTeamWifi([6]*model.Team{teams[0], teams[1], teams[2], nil, nil,
+			if err := arena.accessPoint.ConfigureTeamWifi([6]*model.Team{teams[0], teams[1], teams[2], nil, nil, // TIGER_TODO
 				nil}); err != nil {
 				log.Printf("Failed to configure red alliance WiFi: %s", err.Error())
 			}
-			if err := arena.accessPoint2.ConfigureTeamWifi([6]*model.Team{nil, nil, nil, teams[3], teams[4],
+			if err := arena.accessPoint2.ConfigureTeamWifi([6]*model.Team{nil, nil, nil, teams[3], teams[4], // TIGER_TODO
 				teams[5]}); err != nil {
 				log.Printf("Failed to configure blue alliance WiFi: %s", err.Error())
 			}
@@ -857,7 +857,7 @@ func (arena *Arena) checkCanStartMatch() error {
 		return fmt.Errorf("cannot start match while there is a match still in progress or with results pending")
 	}
 
-	err := arena.checkAllianceStationsReady("R1", "R2", "R3", "B1", "B2", "B3")
+	err := arena.checkAllianceStationsReady("R1", "R2", "R3", "B1", "B2", "B3") // TIGER_TODO
 	if err != nil {
 		return err
 	}
@@ -934,14 +934,14 @@ func (arena *Arena) handlePlcInputOutput() {
 		arena.AbortMatch()
 	}
 	redEstops, blueEstops := arena.Plc.GetTeamEstops()
-	arena.handleEstop("R1", redEstops[0])
+	arena.handleEstop("R1", redEstops[0]) // TIGER_TODO
 	arena.handleEstop("R2", redEstops[1])
 	arena.handleEstop("R3", redEstops[2])
 	arena.handleEstop("B1", blueEstops[0])
 	arena.handleEstop("B2", blueEstops[1])
 	arena.handleEstop("B3", blueEstops[2])
 	redEthernets, blueEthernets := arena.Plc.GetEthernetConnected()
-	arena.AllianceStations["R1"].Ethernet = redEthernets[0]
+	arena.AllianceStations["R1"].Ethernet = redEthernets[0] // TIGER_TODO
 	arena.AllianceStations["R2"].Ethernet = redEthernets[1]
 	arena.AllianceStations["R3"].Ethernet = redEthernets[2]
 	arena.AllianceStations["B1"].Ethernet = blueEthernets[0]
@@ -957,8 +957,8 @@ func (arena *Arena) handlePlcInputOutput() {
 	redScore := &arena.RedRealtimeScore.CurrentScore
 	blueScore := &arena.BlueRealtimeScore.CurrentScore
 	redChargeStationLevel, blueChargeStationLevel := arena.Plc.GetChargeStationsLevel()
-	redAllianceReady := arena.checkAllianceStationsReady("R1", "R2", "R3") == nil
-	blueAllianceReady := arena.checkAllianceStationsReady("B1", "B2", "B3") == nil
+	redAllianceReady := arena.checkAllianceStationsReady("R1", "R2", "R3") == nil  // TIGER_TODO
+	blueAllianceReady := arena.checkAllianceStationsReady("B1", "B2", "B3") == nil // TIGER_TODO
 
 	switch arena.MatchState {
 	case PreMatch:
@@ -983,7 +983,7 @@ func (arena *Arena) handlePlcInputOutput() {
 			}
 		}
 
-		arena.Plc.SetChargeStationLights(false, false)
+		arena.Plc.SetChargeStationLights(false, false) // TIGER_TODO
 	case PostMatch:
 		if arena.FieldReset {
 			arena.Plc.SetFieldResetLight(true)
@@ -993,7 +993,7 @@ func (arena *Arena) handlePlcInputOutput() {
 		arena.Plc.SetStackLights(false, false, !scoreReady, false)
 
 		// Game-specific PLC functions.
-		if inGracePeriod {
+		if inGracePeriod { // TIGER_TODO
 			arena.Plc.SetChargeStationLights(redChargeStationLevel, blueChargeStationLevel)
 		} else {
 			arena.Plc.SetChargeStationLights(false, false)
@@ -1001,9 +1001,9 @@ func (arena *Arena) handlePlcInputOutput() {
 		if arena.lastMatchState != PostMatch {
 			go func() {
 				// Capture a single reading of the charge station levels after the grace period following the match.
-				time.Sleep(game.ChargeStationTeleopGracePeriod)
+				time.Sleep(game.ChargeStationTeleopGracePeriod) // TIGER_TODO
 				redScore.EndgameChargeStationLevel, blueScore.EndgameChargeStationLevel =
-					arena.Plc.GetChargeStationsLevel()
+					arena.Plc.GetChargeStationsLevel() // TIGER_TODO
 				arena.RealtimeScoreNotifier.Notify()
 			}()
 		}
@@ -1013,14 +1013,14 @@ func (arena *Arena) handlePlcInputOutput() {
 		fallthrough
 	case PausePeriod:
 		// Game-specific PLC functions.
-		arena.Plc.SetChargeStationLights(redChargeStationLevel, blueChargeStationLevel)
+		arena.Plc.SetChargeStationLights(redChargeStationLevel, blueChargeStationLevel) // TIGER_TODO
 	case TeleopPeriod:
 		// Game-specific PLC functions.
-		arena.Plc.SetChargeStationLights(redChargeStationLevel, blueChargeStationLevel)
+		arena.Plc.SetChargeStationLights(redChargeStationLevel, blueChargeStationLevel) // TIGER_TODO
 		arena.Plc.SetStackLights(!redAllianceReady, !blueAllianceReady, false, true)
 		if arena.lastMatchState != TeleopPeriod {
 			// Capture a single reading of the charge station levels after the autonomous pause.
-			redScore.AutoChargeStationLevel, blueScore.AutoChargeStationLevel = arena.Plc.GetChargeStationsLevel()
+			redScore.AutoChargeStationLevel, blueScore.AutoChargeStationLevel = arena.Plc.GetChargeStationsLevel() // TIGER_TODO
 			arena.RealtimeScoreNotifier.Notify()
 		}
 	}

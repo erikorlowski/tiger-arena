@@ -51,12 +51,12 @@ func (fields *RankingFields) AddScoreSummary(ownScore *ScoreSummary, opponentSco
 	} else {
 		fields.Losses += 1
 	}
-	fields.RankingPoints += ownScore.BonusRankingPoints
+	fields.RankingPoints += ownScore.BonusRankingPoints // TIGER_TODO
 
 	// Assign tiebreaker points.
 	fields.MatchPoints += ownScore.MatchPoints
-	fields.ChargeStationPoints += ownScore.ChargeStationPoints
-	fields.AutoPoints += ownScore.AutoPoints
+	fields.ChargeStationPoints += ownScore.ChargeStationPoints // TIGER_TODO
+	fields.AutoPoints += ownScore.AutoPoints                   // TIGER_TODO
 }
 
 // Helper function to implement the required interface for Sort.
@@ -70,7 +70,7 @@ func (rankings Rankings) Less(i, j int) bool {
 	b := rankings[j]
 
 	// Use cross-multiplication to keep it in integer math.
-	if a.RankingPoints*b.Played == b.RankingPoints*a.Played {
+	if a.RankingPoints*b.Played == b.RankingPoints*a.Played { // TIGER_TODO
 		if a.MatchPoints*b.Played == b.MatchPoints*a.Played {
 			if a.ChargeStationPoints*b.Played == b.ChargeStationPoints*a.Played {
 				if a.AutoPoints*b.Played == b.AutoPoints*a.Played {

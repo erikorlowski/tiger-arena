@@ -5,7 +5,7 @@
 
 package game
 
-type Score struct {
+type Score struct { // TIGER_TODO
 	MobilityStatuses          [3]bool
 	Grid                      Grid
 	AutoDockStatuses          [3]bool
@@ -16,7 +16,7 @@ type Score struct {
 	PlayoffDq                 bool
 }
 
-var SustainabilityBonusLinkThresholdWithoutCoop = 6
+var SustainabilityBonusLinkThresholdWithoutCoop = 6 // TIGER_TODO
 var SustainabilityBonusLinkThresholdWithCoop = 5
 var ActivationBonusPointThreshold = 26
 
@@ -24,13 +24,13 @@ var ActivationBonusPointThreshold = 26
 type EndgameStatus int
 
 const (
-	EndgameNone EndgameStatus = iota
+	EndgameNone EndgameStatus = iota // TIGER_TODO
 	EndgameParked
 	EndgameDocked
 )
 
 // Calculates and returns the summary fields used for ranking and display.
-func (score *Score) Summarize(opponentScore *Score) *ScoreSummary {
+func (score *Score) Summarize(opponentScore *Score) *ScoreSummary { // TIGER_TODO
 	summary := new(ScoreSummary)
 
 	// Leave the score at zero if the alliance was disqualified.
@@ -121,7 +121,7 @@ func (score *Score) Summarize(opponentScore *Score) *ScoreSummary {
 }
 
 // Returns true if and only if all fields of the two scores are equal.
-func (score *Score) Equals(other *Score) bool {
+func (score *Score) Equals(other *Score) bool { // TIGER_TODO
 	if score.MobilityStatuses != other.MobilityStatuses ||
 		score.Grid != other.Grid ||
 		score.AutoDockStatuses != other.AutoDockStatuses ||

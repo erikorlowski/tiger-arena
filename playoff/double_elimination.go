@@ -7,12 +7,13 @@ package playoff
 
 import (
 	"fmt"
+
 	"github.com/Team254/cheesy-arena/model"
 )
 
 // Creates a double-elimination bracket and returns the root matchup comprising the tournament finals along with
 // scheduled breaks. Only supports having exactly eight alliances.
-func newDoubleEliminationBracket(numAlliances int) (*Matchup, []breakSpec, error) {
+func newDoubleEliminationBracket(numAlliances int) (*Matchup, []breakSpec, error) { // TIGER_TODO
 	if numAlliances != 8 {
 		return nil, nil, fmt.Errorf("double-elimination bracket must have exactly 8 alliances")
 	}

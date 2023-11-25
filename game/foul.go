@@ -19,7 +19,7 @@ func (foul *Foul) Rule() *Rule {
 // Returns the number of points that the foul adds to the opposing alliance's score.
 func (foul *Foul) PointValue() int {
 	if foul.IsTechnical {
-		return 12
+		return 12 // TIGER_TODO
 	} else {
 		return 5
 	}
