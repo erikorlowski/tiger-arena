@@ -67,7 +67,7 @@ func (database *Database) GetEventSettings() (*EventSettings, error) {
 		NumPlayoffAlliances:         8,                        // TIGER_TODO
 		SelectionRound2Order:        "L",                      // TIGER_TODO
 		SelectionRound3Order:        "",                       // TIGER_TODO
-		TbaDownloadEnabled:          true,
+		TbaDownloadEnabled:          false,
 		ApType:                      "linksys",
 		ApTeamChannel:               157,
 		Ap2TeamChannel:              0,
