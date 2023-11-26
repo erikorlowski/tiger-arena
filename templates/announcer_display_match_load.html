@@ -5,22 +5,12 @@
     <h4><b>Alliance {{.Match.PlayoffRedAlliance}}</b></h4>
   {{end}}
   {{template "team" dict "alliance" "red" "team" (index .Teams "R1")}}
-  {{template "team" dict "alliance" "red" "team" (index .Teams "R2")}}
-  {{template "team" dict "alliance" "red" "team" (index .Teams "R3")}}
-  {{range $team := .RedOffFieldTeams}}
-    {{template "team" dict "alliance" "red" "team" $team "isOffField" true}}
-  {{end}}
 </div>
 <div class="row well-sm well-darkblue">
   {{if eq .Match.Type playoffMatch}}
     <h4><b>Alliance {{.Match.PlayoffBlueAlliance}}</b></h4>
   {{end}}
   {{template "team" dict "alliance" "blue" "team" (index .Teams "B1")}}
-  {{template "team" dict "alliance" "blue" "team" (index .Teams "B2")}}
-  {{template "team" dict "alliance" "blue" "team" (index .Teams "B3")}}
-  {{range $team := .BlueOffFieldTeams}}
-    {{template "team" dict "alliance" "blue" "team" $team "isOffField" true}}
-  {{end}}
 </div>
 {{end}}
 {{define "team"}}

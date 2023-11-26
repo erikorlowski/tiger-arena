@@ -148,6 +148,43 @@ body {
 .grid-node-button img {/* // TIGER_TODO */
   width: 90%;
 }
+.shortcut {
+  margin: 0 0.2vw;
+  font-size: 1vw;
+  align-self: flex-start;
+}
+.goal-header {
+  height: 5vw;
+  margin: 0.4vw 0vw;
+  color: #666;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.goal {
+  width: 13vw;
+  height: 5vw;
+  margin: 0.4vw 3vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.number-button {
+  width: 4vw;
+  height: 4vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #666;
+  border-radius: 0.5vw;
+  font-size: 3vw;
+}
+.plus {
+  background: #263;
+}
+.minus {
+  background: #633;
+}
 #chargeStation {/* // TIGER_TODO */
   width: 70vw;
   justify-content: space-between;

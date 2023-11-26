@@ -10,45 +10,30 @@
 <div id="matchName">&nbsp;</div>
 <div id="alliance">
   <div class="scoring-section">
+    <div>
+      <div>&nbsp;</div>
+      <div class="goal-header">High</div>
+      <div class="goal-header">Low</div>
+    </div>
+    <div>
+      {{template "goal" dict "level" "High" "plus" "W" "minus" "Q"}}
+      {{template "goal" dict "level" "Low" "plus" "S" "minus" "A"}}
+    </div>
+  </div>
+  <div class="scoring-section">
     <div class="scoring-header">
       <div>&nbsp;</div>
-      <div>Mobility</div>
-      <div>Auto Dock</div>
       <div>Endgame</div>
     </div>
-    {{range $i := seq 3}}
+    {{range $i := seq 1}}
       <div>
         <div id="team{{$i}}" class="team robot-field"></div>
-        <div id="mobilityStatus{{$i}}" class="boolean robot-field" onclick="handleClick('mobilityStatus', {{$i}});">
-          <div class="value"></div>
-        </div>
-        <div id="autoDockStatus{{$i}}" class="boolean robot-field" onclick="handleClick('autoDockStatus', {{$i}});">
-          <div class="value"></div>
-        </div>
         <div id="endgameStatus{{$i}}" class="endgame-status robot-field"
           onclick="handleClick('endgameStatus', {{$i}});">
           <div class="value"></div>
         </div>
       </div>
     {{end}}
-  </div>
-  <div id="chargeStation" class="scoring-section">
-    <div id="autoChargeStationLevel" class="charge-station-level robot-field"
-      onclick="handleClick('autoChargeStationLevel');">
-      <div class="value"></div>
-    </div>
-    <div>Auto</div>
-    <div>Charge Station</div>
-    <div>Endgame</div>
-    <div id="endgameChargeStationLevel" class="charge-station-level robot-field"
-      onclick="handleClick('endgameChargeStationLevel');">
-      <div class="value"></div>
-    </div>
-  </div>
-  <div id="grid">
-    {{template "gridRow" dict "rowIndex" 2 "validNodeStates" (index .ValidGridNodeStates 2)}}
-    {{template "gridRow" dict "rowIndex" 1 "validNodeStates" (index .ValidGridNodeStates 1)}}
-    {{template "gridRow" dict "rowIndex" 0 "validNodeStates" (index .ValidGridNodeStates 0)}}
   </div>
 </div>
 <div id="commitMatchScore">
@@ -67,31 +52,14 @@
 <script src="/static/js/match_timing.js"></script>
 <script src="/static/js/scoring_panel.js"></script>
 {{end}}
-{{define "gridRow"}}
-<div class="grid-row">
-  {{range $i, $validStates := .validNodeStates}}
-    {{template "gridNode" dict "rowIndex" $.rowIndex "nodeIndex" $i "validStates" $validStates}}
-  {{end}}
-</div>
-{{end}}
-{{define "gridNode"}}
-<div class="grid-node" data-node="{{.nodeIndex}}">
-  <div id="gridAutoScoringRow{{$.rowIndex}}Node{{$.nodeIndex}}" class="grid-node-auto"
-    onclick="handleClick('gridAutoScoring', 0, {{$.rowIndex}}, {{$.nodeIndex}})">
-    Auto
+{{define "goal"}}
+<div class="goal">
+  <div class="number-button minus" onclick="handleClick('{{.minus}}');">
+    <div class="shortcut">{{.minus}}</div>-<div class="shortcut" style="opacity: 0;">{{.minus}}</div>
   </div>
-  <div id="gridNodeStatesRow{{$.rowIndex}}Node{{$.nodeIndex}}" class="grid-node-states">
-    {{range $i, $state := .validStates}}
-      {{if ne $state "Empty"}}
-        {{template "gridNodeButton" dict "i" $i "state" $state "rowIndex" $.rowIndex "nodeIndex" $.nodeIndex}}
-      {{end}}
-    {{end}}
+  <div id="Cones{{.level}}"></div>
+  <div class="number-button plus" onclick="handleClick('{{.plus}}');">
+    <div class="shortcut">{{.plus}}</div>+<div class="shortcut" style="opacity: 0;">{{.plus}}</div>
   </div>
-</div>
-{{end}}
-{{define "gridNodeButton"}}
-<div class="grid-node-button" data-node-state="{{nodeStateToInt .i}}"
-  onclick="handleClick('gridNode', 0, {{.rowIndex}}, {{.nodeIndex}}, {{nodeStateToInt .i}})">
-  <img src="/static/img/node_states/{{.state}}.svg" />
 </div>
 {{end}}

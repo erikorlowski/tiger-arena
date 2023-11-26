@@ -26,54 +26,12 @@
 </div>
 <div id="scoreTemplate" style="display: none;">
   <div class="well well-{{"{{alliance}}"}}">
-    <fieldset>
-      <legend>Autonomous</legend>
-      <b>Mobility</b>
+    <legend>Cones</legend>
+    {{template "goalLevel" dict "goal" "High"}}
+    {{template "goalLevel" dict "goal" "Low"}}
+    <legend>Endgame</legend>
       <div class="form-group">
-        <div class="row">
-          {{range $i := seq 3}}
-            <div class="col-lg-2">
-              <label class="col-lg-8 control-label">Team {{"{{team"}}{{$i}}{{"}}"}}</label>
-              <input type="checkbox" class="input-sm" name="{{"{{alliance}}"}}MobilityStatuses{{$i}}">
-            </div>
-          {{end}}
-        </div>
-      </div>
-      <b>Charge Station Docking</b>
-      <div class="form-group">
-        <div class="row">
-          {{range $i := seq 3}}
-          <div class="col-lg-2">
-            <label class="col-lg-8 control-label">Team {{"{{team"}}{{$i}}{{"}}"}}</label>
-            <input type="checkbox" class="input-sm" name="{{"{{alliance}}"}}AutoDockStatuses{{$i}}">
-          </div>
-          {{end}}
-        </div>
-        <div class="row">
-          <div class="col-lg-4 col-lg-offset-1">
-            <label class="col-lg-8 control-label">Charge Station Is Level?</label>
-            <input type="checkbox" class="input-sm" name="{{"{{alliance}}"}}AutoChargeStationLevel">
-          </div>
-        </div>
-      </div>
-    </fieldset>
-    <fieldset>
-      <legend>Grid</legend>
-      <div class="row">
-        <div class="col-lg-1"></div>
-        {{range $i := seq 9}}
-        <label class="col-lg-1 control-label">{{$i}}</label>
-        {{end}}
-      </div>
-      <br />
-      {{template "gridRow" dict "row" 2 "rowName" "Top" "validNodeStates" .ValidNodeStates}}
-      {{template "gridRow" dict "row" 1 "rowName" "Middle" "validNodeStates" .ValidNodeStates}}
-      {{template "gridRow" dict "row" 0 "rowName" "Bottom" "validNodeStates" .ValidNodeStates}}
-    </fieldset>
-    <fieldset>
-      <legend>Endgame</legend>
-      <div class="form-group">
-        {{range $i := seq 3}}
+        {{range $i := seq 1}}
           <div class="row">
             <label class="col-lg-1 col-lg-offset-1 control-label">Team {{"{{team"}}{{$i}}{{"}}"}}</label>
             <div class="radio col-lg-1">
@@ -82,15 +40,8 @@
             <div class="radio col-lg-1">
               <input type="radio" name="{{"{{alliance}}"}}EndgameStatuses{{$i}}" value="1">Parked
             </div>
-            <div class="radio col-lg-1">
-              <input type="radio" name="{{"{{alliance}}"}}EndgameStatuses{{$i}}" value="2">Docked
-            </div>
           </div>
         {{end}}
-        <div class="col-lg-4 col-lg-offset-1">
-          <label class="col-lg-8 control-label">Charge Station Is Level?</label>
-          <input type="checkbox" class="input-sm" name="{{"{{alliance}}"}}EndgameChargeStationLevel">
-        </div>
       </div>
     </fieldset>
     <fieldset>
@@ -118,18 +69,6 @@
                   {{"{{../team1}}"}}
                  </label>
               </div>
-              <div class="radio col-lg-2">
-                <label>
-                  <input type="radio" name="{{"{{../alliance}}"}}Foul{{"{{@index}}"}}Team" value="{{"{{../team2}}"}}">
-                  {{"{{../team2}}"}}
-                </label>
-              </div>
-              <div class="radio col-lg-2">
-                <label>
-                  <input type="radio" name="{{"{{../alliance}}"}}Foul{{"{{@index}}"}}Team" value="{{"{{../team3}}"}}">
-                  {{"{{../team3}}"}}
-                </label>
-              </div>
             </div>
           </div>
           <div class="form-group">
@@ -154,7 +93,7 @@
     </fieldset>
     <fieldset>
       <legend>Cards</legend>
-      {{range $i := seq 3}}
+      {{range $i := seq 1}}
         <div class="form-group">
           <label class="col-lg-2 control-label">Team {{"{{team"}}{{$i}}{{"}}"}}</label>
           <div class="col-lg-8">
@@ -188,30 +127,17 @@
 <script>
   var matchId = {{.Match.Id}};
   matchResult = jQuery.parseJSON('{{.MatchResultJson}}');
-  allianceResults["red"] = {alliance: "red", team1: {{.Match.Red1}}, team2: {{.Match.Red2}},
-      team3: {{.Match.Red3}}, score: matchResult.RedScore, cards: matchResult.RedCards};
-  allianceResults["blue"] = {alliance: "blue", team1: {{.Match.Blue1}}, team2: {{.Match.Blue2}},
-      team3: {{.Match.Blue3}}, score: matchResult.BlueScore, cards: matchResult.BlueCards};
+  allianceResults["red"] = {alliance: "red", team1: {{.Match.Red1}}, score: matchResult.RedScore, cards: matchResult.RedCards};
+  allianceResults["blue"] = {alliance: "blue", team1: {{.Match.Blue1}}, score: matchResult.BlueScore, cards: matchResult.BlueCards};
   renderResults("red");
   renderResults("blue");
 </script>
 {{end}}
-{{define "gridRow"}}
+{{define "goalLevel"}}
   <div class="row">
-    <label class="col-lg-1">{{.rowName}}</label>
-    {{range $i := seq 9}}
-      {{template "gridNode" dict "row" $.row "column" (add $i -1) "validNodeStates" $.validNodeStates}}
-    {{end}}
-  </div>
-  <br />
-{{end}}
-{{define "gridNode"}}
-  <div class="col-lg-1">
-    <input type="checkbox" class="" name="{{"{{alliance}}"}}GridAutoScoringRow{{.row}}Node{{.column}}"> Auto?
-    <select name="{{"{{alliance}}"}}GridNodeStatesRow{{.row}}Node{{.column}}" style="width: 90px; font-size: 11px;">
-      {{range $i, $nodeState := index .validNodeStates .row .column}}
-        <option value="{{nodeStateToInt $i}}">{{$nodeState}}</option>
-      {{end}}
-    </select>
+    <label class="col-lg-2 col-lg-offset-1">{{.goal}}</label>
+    <div class="col-lg-2">
+      <input type="text" class="form-control input-sm" name="{{"{{alliance}}"}}Cones{{$.goal}}">
+    </div>
   </div>
 {{end}}

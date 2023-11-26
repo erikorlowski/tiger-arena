@@ -11,12 +11,8 @@ const handleMatchLoad = function(data) { // TIGER_TODO
   $("#matchName").text(data.Match.LongName);
   if (alliance === "red") {
     $("#team1").text(data.Match.Red1);
-    $("#team2").text(data.Match.Red2);
-    $("#team3").text(data.Match.Red3);
   } else {
     $("#team1").text(data.Match.Blue1);
-    $("#team2").text(data.Match.Blue2);
-    $("#team3").text(data.Match.Blue3);
   }
 };
 
@@ -48,35 +44,23 @@ const handleRealtimeScore = function(data) { // TIGER_TODO
   }
   const score = realtimeScore.Score;
 
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < 1; i++) {
     const i1 = i + 1;
-    $(`#mobilityStatus${i1}>.value`).text(score.MobilityStatuses[i] ? "Yes" : "No");
-    $("#mobilityStatus" + i1).attr("data-value", score.MobilityStatuses[i]);
-    $("#autoDockStatus" + i1 + ">.value").text(score.AutoDockStatuses[i] ? "Yes" : "No");
-    $("#autoDockStatus" + i1).attr("data-value", score.AutoDockStatuses[i]);
+    $("#ConesHigh").text(score.HighCones);
+    $("#ConesLow").text(score.LowCones);
     $("#endgameStatus" + i1 + ">.value").text(getEndgameStatusText(score.EndgameStatuses[i]));
     $("#endgameStatus" + i1).attr("data-value", score.EndgameStatuses[i]);
   }
+};
 
-  $("#autoChargeStationLevel>.value").text(score.AutoChargeStationLevel ? "Level" : "Not Level");
-  $("#autoChargeStationLevel").attr("data-value", score.AutoChargeStationLevel);
-  $("#endgameChargeStationLevel>.value").text(score.EndgameChargeStationLevel ? "Level" : "Not Level");
-  $("#endgameChargeStationLevel").attr("data-value", score.EndgameChargeStationLevel);
-
-  for (let i = 0; i < 3; i++) {
-    for (let j = 0; j < 9; j++) {
-      $(`#gridAutoScoringRow${i}Node${j}`).attr("data-value", score.Grid.AutoScoring[i][j]);
-      $(`#gridNodeStatesRow${i}Node${j}`).children().each(function() {
-        const element = $(this);
-        element.attr("data-value", element.attr("data-node-state") === score.Grid.Nodes[i][j].toString());
-      });
-    }
-  }
+// Handles a keyboard event and sends the appropriate websocket message.
+var handleKeyPress = function(event) {
+  websocket.send(String.fromCharCode(event.keyCode));
 };
 
 // Handles an element click and sends the appropriate websocket message.
-const handleClick = function(command, teamPosition = 0, gridRow = 0, gridNode = 0, nodeState = 0) { // TIGER_TODO
-  websocket.send(command, {TeamPosition: teamPosition, GridRow: gridRow, GridNode: gridNode, NodeState: nodeState});
+const handleClick = function(command, teamPosition = 0) { // TIGER_TODO
+  websocket.send(command, {TeamPosition: teamPosition});
 };
 
 // Sends a websocket message to indicate that the score for this alliance is ready.
@@ -87,12 +71,10 @@ const commitMatchScore = function() {
 };
 
 // Returns the display text corresponding to the given integer endgame status value.
-const getEndgameStatusText = function(level) { // TIGER_TODO
+const getEndgameStatusText = function(level) {
   switch (level) {
     case 1:
       return "Park";
-    case 2:
-      return "Dock";
     default:
       return "None";
   }
@@ -108,4 +90,6 @@ $(function() {
     matchTime: function(event) { handleMatchTime(event.data); },
     realtimeScore: function(event) { handleRealtimeScore(event.data); },
   });
+
+  $(document).keypress(handleKeyPress);
 });

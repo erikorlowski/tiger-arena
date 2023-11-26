@@ -21,26 +21,14 @@
       <div class="col-lg-6 well well-darkblue status-well">
         <div class="row form-group">
           <div class="col-lg-4">Blue Teams</div>
-          <div class="col-lg-2" data-toggle="tooltip" title="Driver Station Status">DS</div>
-          <div class="col-lg-2" data-toggle="tooltip" title="Radio Status">Rad</div>
-          <div class="col-lg-2" data-toggle="tooltip" title="Robot Status">Rbt</div>
-          <div class="col-lg-2" data-toggle="tooltip" title="Bypass/Disable">Byp</div>
         </div>
         {{template "matchPlayTeam" dict "color" "B" "position" 1}}
-        {{template "matchPlayTeam" dict "color" "B" "position" 2}}
-        {{template "matchPlayTeam" dict "color" "B" "position" 3}}
         <div id="playoffBlueAllianceInfo"></div>
       </div>
       <div class="col-lg-6 well well-darkred status-well">
         <div class="row form-group">
           <div class="col-lg-4">Red Teams</div>
-          <div class="col-lg-2" data-toggle="tooltip" title="Driver Station Status">DS</div>
-          <div class="col-lg-2" data-toggle="tooltip" title="Radio Status">Rad</div>
-          <div class="col-lg-2" data-toggle="tooltip" title="Robot Status">Rbt</div>
-          <div class="col-lg-2" data-toggle="tooltip" title="Bypass/Disable">Byp</div>
         </div>
-        {{template "matchPlayTeam" dict "color" "R" "position" 3}}
-        {{template "matchPlayTeam" dict "color" "R" "position" 2}}
         {{template "matchPlayTeam" dict "color" "R" "position" 1}}
         <div id="playoffRedAllianceInfo"></div>
       </div>
@@ -271,19 +259,9 @@
 {{end}}
 {{define "matchPlayTeam"}}
 <div class="row form-group" id="status{{.color}}{{.position}}">
-  <div class="col-lg-1">{{.position}} </div>
   <div class="col-lg-3">
     <input type="number" class="team-number form-control input-sm"
       onchange="$('#substituteTeams').prop('disabled', false);">
-  </div>
-  <div class="col-lg-2 col-no-padding">
-    <div class="ds-status" data-toggle="tooltip" title="Bandwidth Consumed"></div>
-  </div>
-  <div class="col-lg-2 col-no-padding">
-    <div class="radio-status" data-toggle="tooltip" title="AP SSID"></div>
-  </div>
-  <div class="col-lg-2 col-no-padding">
-    <div class="robot-status" data-toggle="tooltip" title="Battery / Time Since Link Lost"></div>
   </div>
   <div class="col-lg-2 col-no-padding">
     <div class="bypass-status" onclick="toggleBypass('{{.color}}{{.position}}');"></div>

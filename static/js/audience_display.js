@@ -87,17 +87,7 @@ const executeTransitionQueue = function() {
 const handleMatchLoad = function(data) { // TIGER_TODO
   currentMatch = data.Match;
   $("#" + redSide + "Team1").text(currentMatch.Red1);
-  $("#" + redSide + "Team2").text(currentMatch.Red2);
-  $("#" + redSide + "Team3").text(currentMatch.Red3);
-  $("#" + redSide + "Team1Avatar").attr("src", getAvatarUrl(currentMatch.Red1));
-  $("#" + redSide + "Team2Avatar").attr("src", getAvatarUrl(currentMatch.Red2));
-  $("#" + redSide + "Team3Avatar").attr("src", getAvatarUrl(currentMatch.Red3));
   $("#" + blueSide + "Team1").text(currentMatch.Blue1);
-  $("#" + blueSide + "Team2").text(currentMatch.Blue2);
-  $("#" + blueSide + "Team3").text(currentMatch.Blue3);
-  $("#" + blueSide + "Team1Avatar").attr("src", getAvatarUrl(currentMatch.Blue1));
-  $("#" + blueSide + "Team2Avatar").attr("src", getAvatarUrl(currentMatch.Blue2));
-  $("#" + blueSide + "Team3Avatar").attr("src", getAvatarUrl(currentMatch.Blue3));
 
   // Show alliance numbers if this is a playoff match.
   if (currentMatch.Type === matchTypePlayoff) {
@@ -143,29 +133,8 @@ const handleMatchTime = function(data) {
 
 // Handles a websocket message to update the match score.
 const handleRealtimeScore = function(data) { // TIGER_TODO
-  $("#" + redSide + "ScoreNumber").text(data.Red.ScoreSummary.Score - data.Red.ScoreSummary.EndgamePoints);
-  $("#" + blueSide + "ScoreNumber").text(data.Blue.ScoreSummary.Score - data.Blue.ScoreSummary.EndgamePoints);
-
-  $("#" + redSide + "LinkNumerator").text(data.Red.ScoreSummary.NumLinks);
-  $("#" + redSide + "LinkDenominator").text(data.Red.ScoreSummary.NumLinksGoal);
-  $("#" + blueSide + "LinkNumerator").text(data.Blue.ScoreSummary.NumLinks);
-  $("#" + blueSide + "LinkDenominator").text(data.Blue.ScoreSummary.NumLinksGoal);
-  if (currentMatch.Type === matchTypePlayoff) {
-    $("#" + redSide + "LinkDenominator").hide();
-    $("#" + blueSide + "LinkDenominator").hide();
-    $(".link-splitter").hide();
-  } else {
-    $("#" + redSide + "LinkDenominator").show();
-    $("#" + blueSide + "LinkDenominator").show();
-    $(".link-splitter").show();
-  }
-
-  fetch("/api/grid/red/svg")
-    .then(response => response.text())
-    .then(svg => $(`#${redSide}Grid`).html(svg));
-  fetch("/api/grid/blue/svg")
-    .then(response => response.text())
-    .then(svg => $(`#${blueSide}Grid`).html(svg));
+  $("#" + redSide + "ScoreNumber").text(data.Red.ScoreSummary.Score - data.Red.ScoreSummary.ParkPoints);
+  $("#" + blueSide + "ScoreNumber").text(data.Blue.ScoreSummary.Score - data.Blue.ScoreSummary.ParkPoints);
 };
 
 // Handles a websocket message to populate the final score data.
@@ -173,30 +142,15 @@ const handleScorePosted = function(data) { // TIGER_TODO
   $("#" + redSide + "FinalScore").text(data.RedScoreSummary.Score);
   $("#" + redSide + "FinalAlliance").text("Alliance " + data.Match.PlayoffRedAlliance);
   setTeamInfo(redSide, 1, data.Match.Red1, data.RedRankings);
-  setTeamInfo(redSide, 2, data.Match.Red2, data.RedRankings);
-  setTeamInfo(redSide, 3, data.Match.Red3, data.RedRankings);
   if (data.RedOffFieldTeamIds.length > 0) {
     setTeamInfo(redSide, 4, data.RedOffFieldTeamIds[0], data.RedRankings);
   } else {
     setTeamInfo(redSide, 4, 0, data.RedRankings);
   }
-  $("#" + redSide + "FinalMobilityPoints").text(data.RedScoreSummary.MobilityPoints);
-  $("#" + redSide + "FinalGridPoints").text(data.RedScoreSummary.GridPoints);
-  $("#" + redSide + "FinalChargeStationPoints").text(data.RedScoreSummary.ChargeStationPoints);
+  $("#" + redSide + "FinalHighConePoints").text(data.RedScoreSummary.HighConePoints);
+  $("#" + redSide + "FinalLowConePoints").text(data.RedScoreSummary.LowConePoints);
   $("#" + redSide + "FinalParkPoints").text(data.RedScoreSummary.ParkPoints);
   $("#" + redSide + "FinalFoulPoints").text(data.RedScoreSummary.FoulPoints);
-  $("#" + redSide + "FinalSustainabilityBonusRankingPoint").html(
-    data.RedScoreSummary.SustainabilityBonusRankingPoint ? "&#x2714;" : "&#x2718;"
-  );
-  $("#" + redSide + "FinalSustainabilityBonusRankingPoint").attr(
-    "data-checked", data.RedScoreSummary.SustainabilityBonusRankingPoint
-  );
-  $("#" + redSide + "FinalActivationBonusRankingPoint").html(
-    data.RedScoreSummary.ActivationBonusRankingPoint ? "&#x2714;" : "&#x2718;"
-  );
-  $("#" + redSide + "FinalActivationBonusRankingPoint").attr(
-    "data-checked", data.RedScoreSummary.ActivationBonusRankingPoint
-  );
   $("#" + redSide + "FinalRankingPoints").html(data.RedRankingPoints);
   $("#" + redSide + "FinalWins").text(data.RedWins);
   const redFinalDestination = $("#" + redSide + "FinalDestination");
@@ -207,30 +161,15 @@ const handleScorePosted = function(data) { // TIGER_TODO
   $("#" + blueSide + "FinalScore").text(data.BlueScoreSummary.Score);
   $("#" + blueSide + "FinalAlliance").text("Alliance " + data.Match.PlayoffBlueAlliance);
   setTeamInfo(blueSide, 1, data.Match.Blue1, data.BlueRankings);
-  setTeamInfo(blueSide, 2, data.Match.Blue2, data.BlueRankings);
-  setTeamInfo(blueSide, 3, data.Match.Blue3, data.BlueRankings);
   if (data.BlueOffFieldTeamIds.length > 0) {
     setTeamInfo(blueSide, 4, data.BlueOffFieldTeamIds[0], data.BlueRankings);
   } else {
     setTeamInfo(blueSide, 4, 0, data.BlueRankings);
   }
-  $("#" + blueSide + "FinalMobilityPoints").text(data.BlueScoreSummary.MobilityPoints);
-  $("#" + blueSide + "FinalGridPoints").text(data.BlueScoreSummary.GridPoints);
-  $("#" + blueSide + "FinalChargeStationPoints").text(data.BlueScoreSummary.ChargeStationPoints);
+  $("#" + blueSide + "FinalHighConePoints").text(data.BlueScoreSummary.HighConePoints);
+  $("#" + blueSide + "FinalLowConePoints").text(data.BlueScoreSummary.LowConePoints);
   $("#" + blueSide + "FinalParkPoints").text(data.BlueScoreSummary.ParkPoints);
   $("#" + blueSide + "FinalFoulPoints").text(data.BlueScoreSummary.FoulPoints);
-  $("#" + blueSide + "FinalSustainabilityBonusRankingPoint").html(
-    data.BlueScoreSummary.SustainabilityBonusRankingPoint ? "&#x2714;" : "&#x2718;"
-  );
-  $("#" + blueSide + "FinalSustainabilityBonusRankingPoint").attr(
-    "data-checked", data.BlueScoreSummary.SustainabilityBonusRankingPoint
-  );
-  $("#" + blueSide + "FinalActivationBonusRankingPoint").html(
-    data.BlueScoreSummary.ActivationBonusRankingPoint ? "&#x2714;" : "&#x2718;"
-  );
-  $("#" + blueSide + "FinalActivationBonusRankingPoint").attr(
-    "data-checked", data.BlueScoreSummary.ActivationBonusRankingPoint
-  );
   $("#" + blueSide + "FinalRankingPoints").html(data.BlueRankingPoints);
   $("#" + blueSide + "FinalWins").text(data.BlueWins);
   const blueFinalDestination = $("#" + blueSide + "FinalDestination");

@@ -255,9 +255,9 @@ func (web *Web) gridSvgApiHandler(w http.ResponseWriter, r *http.Request) { // T
 	alliance := vars["alliance"]
 	var grid game.Grid
 	if alliance == "red" {
-		grid = web.arena.RedRealtimeScore.CurrentScore.Grid
+		// grid = web.arena.RedRealtimeScore.CurrentScore.Grid
 	} else if alliance == "blue" {
-		grid = web.arena.BlueRealtimeScore.CurrentScore.Grid
+		// grid = web.arena.BlueRealtimeScore.CurrentScore.Grid
 	} else {
 		handleWebErr(w, fmt.Errorf("invalid alliance %q", alliance))
 		return

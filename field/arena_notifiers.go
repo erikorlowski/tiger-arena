@@ -203,8 +203,8 @@ func (arena *Arena) generateRealtimeScoreMessage() any {
 func (arena *Arena) GenerateScorePostedMessage() any {
 	redScoreSummary := arena.SavedMatchResult.RedScoreSummary()
 	blueScoreSummary := arena.SavedMatchResult.BlueScoreSummary()
-	redRankingPoints := redScoreSummary.BonusRankingPoints   // TIGER_TODO
-	blueRankingPoints := blueScoreSummary.BonusRankingPoints // TIGER_TODO
+	redRankingPoints := 0
+	blueRankingPoints := 0
 	switch arena.SavedMatch.Status {
 	case game.RedWonMatch:
 		redRankingPoints += 2

@@ -17,7 +17,7 @@ var MatchTiming = struct {
 	WarningRemainingDurationSec        int
 	TimeoutDurationSec                 int
 	TimeoutWarningRemainingDurationSec int
-}{0, 15, 3, 135, 30, 0, 60} // TIGER_TODO
+}{0, 0, 0, 120, 30, 0, 60} // TIGER_TODO
 
 func GetDurationToAutoEnd() time.Duration { // TIGER_TODO
 	return time.Duration(MatchTiming.WarmupDurationSec+MatchTiming.AutoDurationSec) * time.Second

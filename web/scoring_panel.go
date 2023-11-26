@@ -10,6 +10,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"strings"
 
 	"github.com/Team254/cheesy-arena/field"
 	"github.com/Team254/cheesy-arena/game"
@@ -120,50 +121,23 @@ func (web *Web) scoringPanelWebsocketHandler(w http.ResponseWriter, r *http.Requ
 				continue
 			}
 
+			switch strings.ToUpper(command) {
+			case "Q":
+				scoreChanged = decrementGoal(&score.HighCones)
+			case "A":
+				scoreChanged = decrementGoal(&score.LowCones)
+			case "W":
+				scoreChanged = incrementGoal(&score.HighCones)
+			case "S":
+				scoreChanged = incrementGoal(&score.LowCones)
+			}
+
 			switch command {
-			case "mobilityStatus":
-				if args.TeamPosition >= 1 && args.TeamPosition <= 3 {
-					score.MobilityStatuses[args.TeamPosition-1] = !score.MobilityStatuses[args.TeamPosition-1]
-					scoreChanged = true
-				}
-			case "autoDockStatus":
-				if args.TeamPosition >= 1 && args.TeamPosition <= 3 {
-					score.AutoDockStatuses[args.TeamPosition-1] = !score.AutoDockStatuses[args.TeamPosition-1]
-					scoreChanged = true
-				}
 			case "endgameStatus":
 				if args.TeamPosition >= 1 && args.TeamPosition <= 3 {
 					score.EndgameStatuses[args.TeamPosition-1]++
 					if score.EndgameStatuses[args.TeamPosition-1] > 2 {
 						score.EndgameStatuses[args.TeamPosition-1] = 0
-					}
-					scoreChanged = true
-				}
-			case "autoChargeStationLevel":
-				score.AutoChargeStationLevel = !score.AutoChargeStationLevel
-				scoreChanged = true
-			case "endgameChargeStationLevel":
-				score.EndgameChargeStationLevel = !score.EndgameChargeStationLevel
-				scoreChanged = true
-			case "gridAutoScoring":
-				if args.GridRow >= 0 && args.GridRow <= 2 && args.GridNode >= 0 && args.GridNode <= 8 {
-					score.Grid.AutoScoring[args.GridRow][args.GridNode] =
-						!score.Grid.AutoScoring[args.GridRow][args.GridNode]
-					scoreChanged = true
-				}
-			case "gridNode":
-				if args.GridRow >= 0 && args.GridRow <= 2 && args.GridNode >= 0 && args.GridNode <= 8 {
-					currentState := score.Grid.Nodes[args.GridRow][args.GridNode]
-					if currentState == args.NodeState {
-						score.Grid.Nodes[args.GridRow][args.GridNode] = game.Empty
-						if web.arena.MatchState == field.AutoPeriod || web.arena.MatchState == field.PausePeriod {
-							score.Grid.AutoScoring[args.GridRow][args.GridNode] = false
-						}
-					} else {
-						score.Grid.Nodes[args.GridRow][args.GridNode] = args.NodeState
-						if web.arena.MatchState == field.AutoPeriod || web.arena.MatchState == field.PausePeriod {
-							score.Grid.AutoScoring[args.GridRow][args.GridNode] = true
-						}
 					}
 					scoreChanged = true
 				}
@@ -174,4 +148,21 @@ func (web *Web) scoringPanelWebsocketHandler(w http.ResponseWriter, r *http.Requ
 			}
 		}
 	}
+}
+
+// Increments the cargo count for the given goal.
+func incrementGoal(goal *int) bool {
+	// Use just the first hub quadrant for manual scoring.
+	*goal++
+	return true
+}
+
+// Decrements the cargo for the given goal.
+func decrementGoal(goal *int) bool {
+	// Use just the first hub quadrant for manual scoring.
+	if *goal > 0 {
+		*goal--
+		return true
+	}
+	return false
 }

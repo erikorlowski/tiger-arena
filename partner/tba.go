@@ -153,7 +153,6 @@ var autoChargeStationMapping = map[bool]string{false: "None", true: "Docked"}
 var endGameChargeStationMapping = map[game.EndgameStatus]string{ // TIGER_TODO
 	game.EndgameNone:   "None",
 	game.EndgameParked: "Park",
-	game.EndgameDocked: "Docked",
 }
 var chargeStationLevelMapping = map[bool]string{false: "NotLevel", true: "Level"} // TIGER_TODO
 var gridRowMapping = map[int]string{0: "Bottom", 1: "Mid", 2: "Top"}              // TIGER_TODO
@@ -398,17 +397,15 @@ func (client *TbaClient) PublishRankings(database *model.Database) error {
 	tbaRankings := make([]TbaRanking, len(rankings))
 	for i, ranking := range rankings {
 		tbaRankings[i] = TbaRanking{ // TIGER_TODO
-			TeamKey:       getTbaTeam(ranking.TeamId),
-			Rank:          ranking.Rank,
-			RP:            float32(ranking.RankingPoints) / float32(ranking.Played),
-			Match:         float32(ranking.MatchPoints) / float32(ranking.Played),
-			ChargeStation: float32(ranking.ChargeStationPoints) / float32(ranking.Played),
-			Auto:          float32(ranking.AutoPoints) / float32(ranking.Played),
-			Wins:          ranking.Wins,
-			Losses:        ranking.Losses,
-			Ties:          ranking.Ties,
-			Dqs:           ranking.Disqualifications,
-			Played:        ranking.Played,
+			TeamKey: getTbaTeam(ranking.TeamId),
+			Rank:    ranking.Rank,
+			RP:      float32(ranking.RankingPoints) / float32(ranking.Played),
+			Match:   float32(ranking.MatchPoints) / float32(ranking.Played),
+			Wins:    ranking.Wins,
+			Losses:  ranking.Losses,
+			Ties:    ranking.Ties,
+			Dqs:     ranking.Disqualifications,
+			Played:  ranking.Played,
 		}
 	}
 	jsonBody, err := json.Marshal(TbaRankings{breakdowns, tbaRankings})
@@ -601,52 +598,16 @@ func createTbaScoringBreakdown(
 		opponentScoreSummary = matchResult.RedScoreSummary()
 	}
 
-	breakdown.MobilityRobot1 = mobilityMapping[score.MobilityStatuses[0]]
-	breakdown.MobilityRobot2 = mobilityMapping[score.MobilityStatuses[1]]
-	breakdown.MobilityRobot3 = mobilityMapping[score.MobilityStatuses[2]]
-	breakdown.AutoMobilityPoints = scoreSummary.MobilityPoints
-	breakdown.AutoChargeStationRobot1 = autoChargeStationMapping[score.AutoDockStatuses[0]]
-	breakdown.AutoChargeStationRobot2 = autoChargeStationMapping[score.AutoDockStatuses[1]]
-	breakdown.AutoChargeStationRobot3 = autoChargeStationMapping[score.AutoDockStatuses[2]]
-	breakdown.AutoBridgeState = chargeStationLevelMapping[score.AutoChargeStationLevel]
 	breakdown.AutoCommunity = make(map[string][9]string)
 	breakdown.TeleopCommunity = make(map[string][9]string)
-	for rowIndex, rowName := range gridRowMapping {
-		shortRowName := string([]rune(rowName)[0])
-		breakdown.AutoCommunity[shortRowName] = createTbaGridRow(&score.Grid, rowIndex, true)
-		breakdown.TeleopCommunity[shortRowName] = createTbaGridRow(&score.Grid, rowIndex, false)
-	}
 	for i := 0; i < 3; i++ {
 		for j := 0; j < 9; j++ {
-			if score.Grid.Nodes[i][j] != game.Empty {
-				if score.Grid.AutoScoring[i][j] {
-					breakdown.AutoGamePieceCount++
-				}
-				breakdown.TeleopGamePieceCount++
-			}
 		}
 	}
 	breakdown.Links = make([]TbaLink, 0)
-	for _, link := range score.Grid.Links() {
-		tbaLink := TbaLink{
-			Nodes: [3]int{link.StartColumn, link.StartColumn + 1, link.StartColumn + 2},
-			Row:   gridRowMapping[int(link.Row)],
-		}
-		breakdown.Links = append(breakdown.Links, tbaLink)
-	}
-	breakdown.LinkPoints = score.Grid.LinkPoints()
-	breakdown.AutoGamePiecePoints = score.Grid.AutoGamePiecePoints()
-	breakdown.TeleopGamePiecePoints = score.Grid.TeleopGamePiecePoints() + score.Grid.SuperchargedPoints()
-	breakdown.AutoPoints = scoreSummary.AutoPoints
-	breakdown.ExtraGamePieceCount = score.Grid.NumSuperchargedNodes()
-	breakdown.EndGameChargeStationRobot1 = endGameChargeStationMapping[score.EndgameStatuses[0]]
-	breakdown.EndGameChargeStationRobot2 = endGameChargeStationMapping[score.EndgameStatuses[1]]
-	breakdown.EndGameChargeStationRobot3 = endGameChargeStationMapping[score.EndgameStatuses[2]]
-	breakdown.EndGameBridgeState = chargeStationLevelMapping[score.EndgameChargeStationLevel]
-	breakdown.TeleopPoints = breakdown.TeleopGamePiecePoints + scoreSummary.EndgamePoints
-	breakdown.CoopertitionCriteriaMet = score.Grid.IsCoopertitionThresholdAchieved()
-	breakdown.SustainabilityBonusAchieved = scoreSummary.SustainabilityBonusRankingPoint
-	breakdown.ActivationBonusAchieved = scoreSummary.ActivationBonusRankingPoint
+	// breakdown.EndGameChargeStationRobot1 = endGameChargeStationMapping[score.EndgameStatuses[0]]
+	// breakdown.EndGameChargeStationRobot2 = endGameChargeStationMapping[score.EndgameStatuses[1]]
+	// breakdown.EndGameChargeStationRobot3 = endGameChargeStationMapping[score.EndgameStatuses[2]]
 	for _, foul := range score.Fouls {
 		if foul.IsTechnical {
 			breakdown.TechFoulCount++

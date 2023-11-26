@@ -27,13 +27,13 @@ func UpdateMatchSounds() {
 		{
 			"end", // TIGER_TODO
 			"wav",
-			float64(MatchTiming.AutoDurationSec),
+			-2,
 			false,
 		},
 		{
 			"resume", // TIGER_TODO
 			"wav",
-			float64(MatchTiming.AutoDurationSec + MatchTiming.PauseDurationSec),
+			-2,
 			false,
 		},
 		{

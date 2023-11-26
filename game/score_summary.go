@@ -6,22 +6,12 @@
 package game
 
 type ScoreSummary struct { // TIGER_TODO
-	MobilityPoints                  int
-	AutoPoints                      int
-	GridPoints                      int
-	ChargeStationPoints             int
-	ParkPoints                      int
-	EndgamePoints                   int
-	MatchPoints                     int
-	FoulPoints                      int
-	Score                           int
-	CoopertitionBonus               bool
-	NumLinks                        int
-	NumLinksGoal                    int
-	SustainabilityBonusRankingPoint bool
-	ActivationBonusRankingPoint     bool
-	BonusRankingPoints              int
-	NumOpponentTechFouls            int
+	HighConePoints int
+	LowConePoints  int
+	ParkPoints     int
+	MatchPoints    int
+	FoulPoints     int
+	Score          int
 }
 
 type MatchStatus int
@@ -42,23 +32,6 @@ func (t MatchStatus) Get() MatchStatus {
 func DetermineMatchStatus(redScoreSummary, blueScoreSummary *ScoreSummary, applyPlayoffTiebreakers bool) MatchStatus {
 	if status := comparePoints(redScoreSummary.Score, blueScoreSummary.Score); status != TieMatch {
 		return status
-	}
-
-	if applyPlayoffTiebreakers { // TIGER_TODO
-		// Check scoring breakdowns to resolve playoff ties.
-		if status := comparePoints(
-			redScoreSummary.NumOpponentTechFouls, blueScoreSummary.NumOpponentTechFouls,
-		); status != TieMatch {
-			return status
-		}
-		if status := comparePoints(
-			redScoreSummary.ChargeStationPoints, blueScoreSummary.ChargeStationPoints,
-		); status != TieMatch {
-			return status
-		}
-		if status := comparePoints(redScoreSummary.AutoPoints, blueScoreSummary.AutoPoints); status != TieMatch {
-			return status
-		}
 	}
 
 	return TieMatch

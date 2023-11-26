@@ -31,21 +31,15 @@ const renderResults = function(alliance) { // TIGER_TODO
   $("#" + alliance + "Score").html(scoreContent);
 
   // Set the values of the form fields from the JSON results data.
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < 1; i++) {
     const i1 = i + 1;
 
-    getInputElement(alliance, "MobilityStatuses" + i1).prop("checked", result.score.MobilityStatuses[i]);
-    getInputElement(alliance, "AutoDockStatuses" + i1).prop("checked", result.score.AutoDockStatuses[i]);
     getInputElement(alliance, "EndgameStatuses" + i1, result.score.EndgameStatuses[i]).prop("checked", true);
 
-    for (let j = 0; j < 9; j++) {
-      getInputElement(alliance, `GridAutoScoringRow${i}Node${j}`).prop("checked", result.score.Grid.AutoScoring[i][j]);
-      getSelectElement(alliance, `GridNodeStatesRow${i}Node${j}`).val(result.score.Grid.Nodes[i][j]);
-    }
   }
 
-  getInputElement(alliance, "AutoChargeStationLevel").prop("checked", result.score.AutoChargeStationLevel);
-  getInputElement(alliance, "EndgameChargeStationLevel").prop("checked", result.score.EndgameChargeStationLevel);
+  getInputElement(alliance, "ConesHigh").val(result.score.HighCones);
+  getInputElement(alliance, "ConesLow").val(result.score.LowCones);
 
   if (result.score.Fouls != null) {
     $.each(result.score.Fouls, function(k, v) {
@@ -70,27 +64,15 @@ const updateResults = function(alliance) { // TIGER_TODO
     formData[v.name] = v.value;
   });
 
-  result.score.MobilityStatuses = [];
-  result.score.Grid = {AutoScoring: [], Nodes: []};
-  result.score.AutoDockStatuses = [];
+  result.score.HighCones = parseInt(formData[alliance + "ConesHigh"])
+  result.score.LowCones = parseInt(formData[alliance + "ConesLow"])
+
   result.score.EndgameStatuses = [];
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < 1; i++) {
     const i1 = i + 1;
 
-    result.score.MobilityStatuses[i] = formData[alliance + "MobilityStatuses" + i1] === "on";
-    result.score.AutoDockStatuses[i] = formData[alliance + "AutoDockStatuses" + i1] === "on";
     result.score.EndgameStatuses[i] = parseInt(formData[alliance + "EndgameStatuses" + i1]);
-
-    result.score.Grid.AutoScoring[i] = [];
-    result.score.Grid.Nodes[i] = [];
-    for (let j = 0; j < 9; j++) {
-      result.score.Grid.AutoScoring[i][j] = formData[alliance + `GridAutoScoringRow${i}Node${j}`] === "on";
-      result.score.Grid.Nodes[i][j] = parseInt(formData[alliance + `GridNodeStatesRow${i}Node${j}`]);
-    }
   }
-
-  result.score.AutoChargeStationLevel = formData[alliance + "AutoChargeStationLevel"] === "on";
-  result.score.EndgameChargeStationLevel = formData[alliance + "EndgameChargeStationLevel"] === "on";
 
   result.score.Fouls = [];
 
@@ -105,7 +87,7 @@ const updateResults = function(alliance) { // TIGER_TODO
   }
 
   result.cards = {};
-  $.each([result.team1, result.team2, result.team3], function(i, team) {
+  $.each([result.team1], function(i, team) {
     result.cards[team] = formData[alliance + "Team" + team + "Card"];
   });
 };

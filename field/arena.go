@@ -221,10 +221,6 @@ func (arena *Arena) LoadSettings() error {
 	game.UpdateMatchSounds()
 	arena.MatchTimingNotifier.Notify()
 
-	game.SustainabilityBonusLinkThresholdWithoutCoop = settings.SustainabilityBonusLinkThresholdWithoutCoop // TIGER_TODO
-	game.SustainabilityBonusLinkThresholdWithCoop = settings.SustainabilityBonusLinkThresholdWithCoop
-	game.ActivationBonusPointThreshold = settings.ActivationBonusPointThreshold
-
 	// Reconstruct the playoff tournament in memory.
 	if err = arena.CreatePlayoffTournament(); err != nil {
 		return err
@@ -499,12 +495,12 @@ func (arena *Arena) ResetMatch() error {
 	}
 	arena.MatchState = PreMatch
 	arena.matchAborted = false
-	arena.AllianceStations["R1"].Bypass = false // TIGER_TODO
-	arena.AllianceStations["R2"].Bypass = false
-	arena.AllianceStations["R3"].Bypass = false
-	arena.AllianceStations["B1"].Bypass = false
-	arena.AllianceStations["B2"].Bypass = false
-	arena.AllianceStations["B3"].Bypass = false
+	arena.AllianceStations["R1"].Bypass = true // TIGER_TODO
+	arena.AllianceStations["R2"].Bypass = true
+	arena.AllianceStations["R3"].Bypass = true
+	arena.AllianceStations["B1"].Bypass = true
+	arena.AllianceStations["B2"].Bypass = true
+	arena.AllianceStations["B3"].Bypass = true
 	arena.MuteMatchSounds = false
 	return nil
 }
@@ -954,8 +950,8 @@ func (arena *Arena) handlePlcInputOutput() {
 	teleopGracePeriod := matchStartTime.Add(game.GetDurationToTeleopEnd() + game.ChargeStationTeleopGracePeriod)
 	inGracePeriod := currentTime.Before(teleopGracePeriod)
 
-	redScore := &arena.RedRealtimeScore.CurrentScore
-	blueScore := &arena.BlueRealtimeScore.CurrentScore
+	// redScore := &arena.RedRealtimeScore.CurrentScore
+	// blueScore := &arena.BlueRealtimeScore.CurrentScore
 	redChargeStationLevel, blueChargeStationLevel := arena.Plc.GetChargeStationsLevel()
 	redAllianceReady := arena.checkAllianceStationsReady("R1", "R2", "R3") == nil  // TIGER_TODO
 	blueAllianceReady := arena.checkAllianceStationsReady("B1", "B2", "B3") == nil // TIGER_TODO
@@ -1002,8 +998,6 @@ func (arena *Arena) handlePlcInputOutput() {
 			go func() {
 				// Capture a single reading of the charge station levels after the grace period following the match.
 				time.Sleep(game.ChargeStationTeleopGracePeriod) // TIGER_TODO
-				redScore.EndgameChargeStationLevel, blueScore.EndgameChargeStationLevel =
-					arena.Plc.GetChargeStationsLevel() // TIGER_TODO
 				arena.RealtimeScoreNotifier.Notify()
 			}()
 		}
@@ -1019,8 +1013,6 @@ func (arena *Arena) handlePlcInputOutput() {
 		arena.Plc.SetChargeStationLights(redChargeStationLevel, blueChargeStationLevel) // TIGER_TODO
 		arena.Plc.SetStackLights(!redAllianceReady, !blueAllianceReady, false, true)
 		if arena.lastMatchState != TeleopPeriod {
-			// Capture a single reading of the charge station levels after the autonomous pause.
-			redScore.AutoChargeStationLevel, blueScore.AutoChargeStationLevel = arena.Plc.GetChargeStationsLevel() // TIGER_TODO
 			arena.RealtimeScoreNotifier.Notify()
 		}
 	}

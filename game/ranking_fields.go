@@ -8,16 +8,14 @@ package game
 import "math/rand"
 
 type RankingFields struct {
-	RankingPoints       int
-	MatchPoints         int
-	ChargeStationPoints int
-	AutoPoints          int
-	Random              float64
-	Wins                int
-	Losses              int
-	Ties                int
-	Disqualifications   int
-	Played              int
+	RankingPoints     int
+	MatchPoints       int
+	Random            float64
+	Wins              int
+	Losses            int
+	Ties              int
+	Disqualifications int
+	Played            int
 }
 
 type Ranking struct {
@@ -51,12 +49,9 @@ func (fields *RankingFields) AddScoreSummary(ownScore *ScoreSummary, opponentSco
 	} else {
 		fields.Losses += 1
 	}
-	fields.RankingPoints += ownScore.BonusRankingPoints // TIGER_TODO
 
 	// Assign tiebreaker points.
-	fields.MatchPoints += ownScore.MatchPoints
-	fields.ChargeStationPoints += ownScore.ChargeStationPoints // TIGER_TODO
-	fields.AutoPoints += ownScore.AutoPoints                   // TIGER_TODO
+	fields.MatchPoints += ownScore.Score
 }
 
 // Helper function to implement the required interface for Sort.
@@ -72,13 +67,7 @@ func (rankings Rankings) Less(i, j int) bool {
 	// Use cross-multiplication to keep it in integer math.
 	if a.RankingPoints*b.Played == b.RankingPoints*a.Played { // TIGER_TODO
 		if a.MatchPoints*b.Played == b.MatchPoints*a.Played {
-			if a.ChargeStationPoints*b.Played == b.ChargeStationPoints*a.Played {
-				if a.AutoPoints*b.Played == b.AutoPoints*a.Played {
-					return a.Random > b.Random
-				}
-				return a.AutoPoints*b.Played > b.AutoPoints*a.Played
-			}
-			return a.ChargeStationPoints*b.Played > b.ChargeStationPoints*a.Played
+			return a.Random > b.Random
 		}
 		return a.MatchPoints*b.Played > b.MatchPoints*a.Played
 	}

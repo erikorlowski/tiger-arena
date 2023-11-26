@@ -100,11 +100,6 @@ func (web *Web) settingsPostHandler(w http.ResponseWriter, r *http.Request) {
 	eventSettings.PauseDurationSec, _ = strconv.Atoi(r.PostFormValue("pauseDurationSec"))
 	eventSettings.TeleopDurationSec, _ = strconv.Atoi(r.PostFormValue("teleopDurationSec"))
 	eventSettings.WarningRemainingDurationSec, _ = strconv.Atoi(r.PostFormValue("warningRemainingDurationSec"))
-	eventSettings.SustainabilityBonusLinkThresholdWithoutCoop, _ =
-		strconv.Atoi(r.PostFormValue("sustainabilityBonusLinkThresholdWithoutCoop"))
-	eventSettings.SustainabilityBonusLinkThresholdWithCoop, _ =
-		strconv.Atoi(r.PostFormValue("sustainabilityBonusLinkThresholdWithCoop"))
-	eventSettings.ActivationBonusPointThreshold, _ = strconv.Atoi(r.PostFormValue("activationBonusPointThreshold"))
 
 	if eventSettings.Ap2TeamChannel != 0 && eventSettings.Ap2TeamChannel == eventSettings.ApTeamChannel {
 		web.renderSettings(w, r, "Cannot use same channel for both access points.")

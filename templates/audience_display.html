@@ -22,51 +22,17 @@
           <div id="matchOverlayTop">
             <div class="teams" id="leftTeams">
               <div id="leftTeam1"></div>
-              <div id="leftTeam2"></div>
-              <div id="leftTeam3"></div>
             </div>
             <div class="score reversible-left">
-              <div class="avatars">
-                <img class="avatar" id="leftTeam1Avatar" src="" />
-                <img class="avatar" id="leftTeam2Avatar" src="" />
-                <img class="avatar" id="leftTeam3Avatar" src="" />
-              </div>
-              <div class="score-fields">
-                <div class="score-links">
-                  <div>
-                    <span id="leftLinkNumerator"></span>
-                    <span class="link-splitter">/</span>
-                    <span id="leftLinkDenominator"></span>
-                  </div>
-                  <img class="link-icon" src="/static/img/link.svg" />
-                </div>
-                <div class="score-grid" id="leftGrid"></div>
-              </div>
               <div class="score-number" id="leftScoreNumber"></div>
             </div>
             <div class="score score-right reversible-right">
               <div class="score-number" id="rightScoreNumber"></div>
               <div class="score-fields">
-                <div class="score-grid" id="rightGrid"></div>
-                <div class="score-links">
-                  <div>
-                    <span id="rightLinkNumerator"></span>
-                    <span class="link-splitter">/</span>
-                    <span id="rightLinkDenominator"></span>
-                  </div>
-                  <img class="link-icon" src="/static/img/link.svg" />
-                </div>
-              </div>
-              <div class="avatars">
-                <img class="avatar" id="rightTeam1Avatar" src="" />
-                <img class="avatar" id="rightTeam2Avatar" src="" />
-                <img class="avatar" id="rightTeam3Avatar" src="" />
               </div>
             </div>
             <div class="teams" id="rightTeams">
               <div id="rightTeam1"></div>
-              <div id="rightTeam2"></div>
-              <div id="rightTeam3"></div>
             </div>
           </div>
           <div id="eventMatchInfo">
@@ -111,9 +77,8 @@
             <div class="final-breakdown final-breakdown-teams">
               <div class="final-teams reversible-left">
                 <div class="final-alliance playoff-only-field" id="leftFinalAlliance"></div>
-                {{range $i := seq 4}}
+                {{range $i := seq 1}}
                   <div class="final-team-row">
-                    <img class="final-team-avatar" id="leftFinalTeam{{$i}}Avatar" src="" />
                     <div class="final-team-number" id="leftFinalTeam{{$i}}"></div>
                     <div class="final-team-rank">
                       <img id="leftFinalTeam{{$i}}RankIndicator" src="" />
@@ -127,48 +92,30 @@
               </div>
             </div>
             <div class="final-breakdown" id="leftFinalBreakdown">
-              <div id="leftFinalMobilityPoints"></div>
-              <div id="leftFinalGridPoints"></div>
-              <div id="leftFinalChargeStationPoints"></div>
+              <div id="leftFinalHighConePoints"></div>
+              <div id="leftFinalLowConePoints"></div>
               <div id="leftFinalParkPoints"></div>
               <div id="leftFinalFoulPoints"></div>
-              <div class="playoff-hidden-field">
-                <div id="leftFinalSustainabilityBonusRankingPoint"></div>
-                <div id="leftFinalActivationBonusRankingPoint"></div>
-                <div id="leftFinalRankingPoints"></div>
-              </div>
               <div class="playoff-only-field">
                 <div>&nbsp;</div>
                 <div id="leftFinalWins"></div>
               </div>
             </div>
             <div class="final-breakdown" id="centerFinalBreakdown">
-              <div>Mobility</div>
-              <div>Grid</div>
-              <div>Charge Station</div>
+              <div>High Cone</div>
+              <div>Low Cone</div>
               <div>Park</div>
               <div>Foul</div>
-              <div class="playoff-hidden-field">
-                <div>Sustainability Bonus</div>
-                <div>Activation Bonus</div>
-                <div>Ranking Points</div>
-              </div>
               <div class="playoff-only-field">
                 <div>&nbsp;</div>
                 <div>Wins</div>
               </div>
             </div>
             <div class="final-breakdown" id="rightFinalBreakdown">
-              <div id="rightFinalMobilityPoints"></div>
-              <div id="rightFinalGridPoints"></div>
-              <div id="rightFinalChargeStationPoints"></div>
+              <div id="rightFinalHighConePoints"></div>
+              <div id="rightFinalLowConePoints"></div>
               <div id="rightFinalParkPoints"></div>
               <div id="rightFinalFoulPoints"></div>
-              <div class="playoff-hidden-field">
-                <div id="rightFinalSustainabilityBonusRankingPoint"></div>
-                <div id="rightFinalActivationBonusRankingPoint"></div>
-                <div id="rightFinalRankingPoints"></div>
-              </div>
               <div class="playoff-only-field">
                 <div>&nbsp;</div>
                 <div id="rightFinalWins"></div>
@@ -177,9 +124,8 @@
             <div class="final-breakdown final-breakdown-teams">
               <div class="final-teams reversible-right">
                 <div class="final-alliance playoff-only-field" id="rightFinalAlliance"></div>
-                {{range $i := seq 4}}
+                {{range $i := seq 1}}
                   <div class="final-team-row">
-                    <img class="final-team-avatar" id="rightFinalTeam{{$i}}Avatar" src="" />
                     <div class="final-team-number" id="rightFinalTeam{{$i}}"></div>
                     <div class="final-team-rank">
                       <img id="rightFinalTeam{{$i}}RankIndicator" src="" />

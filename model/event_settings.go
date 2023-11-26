@@ -76,9 +76,6 @@ func (database *Database) GetEventSettings() (*EventSettings, error) {
 		PauseDurationSec:            game.MatchTiming.PauseDurationSec,
 		TeleopDurationSec:           game.MatchTiming.TeleopDurationSec,
 		WarningRemainingDurationSec: game.MatchTiming.WarningRemainingDurationSec,
-		SustainabilityBonusLinkThresholdWithoutCoop: game.SustainabilityBonusLinkThresholdWithoutCoop, // TIGER_TODO
-		SustainabilityBonusLinkThresholdWithCoop:    game.SustainabilityBonusLinkThresholdWithCoop,    // TIGER_TODO
-		ActivationBonusPointThreshold:               game.ActivationBonusPointThreshold,               // TIGER_TODO
 	}
 
 	if err := database.eventSettingsTable.create(&eventSettings); err != nil {
