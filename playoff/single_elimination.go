@@ -193,9 +193,9 @@ func newSingleEliminationBracket(numAlliances int) (*Matchup, []breakSpec, error
 
 	// Define scheduled breaks.
 	breakSpecs := []breakSpec{
-		{43, 480, "Field Break"}, // TIGER_TODO
-		{44, 480, "Field Break"},
-		{45, 480, "Field Break"},
+		{43, 300, "Field Break"}, // TIGER_TODO
+		{44, 300, "Field Break"},
+		{45, 300, "Field Break"},
 	}
 
 	return &final, breakSpecs, nil
