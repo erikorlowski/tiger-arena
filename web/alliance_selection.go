@@ -77,14 +77,15 @@ func (web *Web) allianceSelectionPostHandler(w http.ResponseWriter, r *http.Requ
 					}
 				}
 				if !found { // TIGER_TODO
-					web.renderAllianceSelection(
-						w,
-						r,
-						fmt.Sprintf(
-							"Team %d has not played any matches at this event and is ineligible for selection.", teamId,
-						),
-					)
-					return
+					web.arena.AllianceSelectionAlliances[i].TeamIds[j] = 0
+					// web.renderAllianceSelection(
+					// 	w,
+					// 	r,
+					// 	fmt.Sprintf(
+					// 		"Team %d has not played any matches at this event and is ineligible for selection.", teamId,
+					// 	),
+					// )
+					// return
 				}
 			}
 		}
@@ -195,21 +196,21 @@ func (web *Web) allianceSelectionFinalizeHandler(w http.ResponseWriter, r *http.
 	}
 
 	// Check that all spots are filled.
-	for _, alliance := range web.arena.AllianceSelectionAlliances {
-		for _, allianceTeamId := range alliance.TeamIds {
-			if allianceTeamId <= 0 {
-				web.renderAllianceSelection(w, r, "Can't finalize alliance selection until all spots have been filled.")
-				return
-			}
-		}
-	}
+	// for _, alliance := range web.arena.AllianceSelectionAlliances {
+	// 	for _, allianceTeamId := range alliance.TeamIds {
+	// 		if allianceTeamId <= 0 {
+	// 			web.renderAllianceSelection(w, r, "Can't finalize alliance selection until all spots have been filled.")
+	// 			return
+	// 		}
+	// 	}
+	// }
 
 	// Save alliances to the database.
 	for _, alliance := range web.arena.AllianceSelectionAlliances {
 		// Populate the initial lineup according to the tournament rules (alliance captain in the middle, first pick on
 		// the left, second pick on the right).
-		alliance.Lineup[0] = alliance.TeamIds[1] // TIGER_TODO
-		alliance.Lineup[1] = alliance.TeamIds[0]
+		alliance.Lineup[0] = alliance.TeamIds[0] // TIGER_TODO
+		alliance.Lineup[1] = alliance.TeamIds[1]
 		alliance.Lineup[2] = alliance.TeamIds[2]
 
 		err := web.arena.Database.CreateAlliance(&alliance)
